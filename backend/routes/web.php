@@ -19,5 +19,5 @@ Route::get('/adminka', function () {
 });
 
 Route::get('/', [PageController::class, 'index'])->name('homePage');
-
+Route::get('/rooms', [PageController::class, 'rooms'])->name('roomsPage');
 
