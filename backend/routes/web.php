@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,6 @@ Route::get('/adminka', function () {
 Route::get('/', [PageController::class, 'index'])->name('homePage');
 Route::get('/rooms', [PageController::class, 'rooms'])->name('roomsPage');
 
+Route::group(['prefix' => 'adminka'], function() {
+    Route::get('/customers', [AdminController::class, 'customers'])->name('customersPage');
+});
