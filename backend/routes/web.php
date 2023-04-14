@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\RoomTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +22,10 @@ Route::get('/adminka', function () {
 });
 
 Route::get('/', [PageController::class, 'index'])->name('homePage');
+Route::post('/check', [BookingController::class, 'check'])->name('checkBooking');
 Route::get('/rooms', [PageController::class, 'rooms'])->name('roomsPage');
 
 Route::group(['prefix' => 'adminka'], function() {
     Route::get('/customers', [AdminController::class, 'customers'])->name('customersPage');
+    Route::resource('room-types', RoomTypeController::class);
 });

@@ -10,4 +10,14 @@ class PageController extends Controller
     {
         return view('front.index');
     }
+
+    public function about()
+    {
+
+    }
+
+    public function contact()
+    {
+
+    }
 }
