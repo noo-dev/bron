@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\RoomType;
+use App\Models\Customer;
+use App\Http\Controllers\CustomerController;
 
-class RoomTypeController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,8 @@ class RoomTypeController extends Controller
      */
     public function index()
     {
-        $room_types = RoomType::all();
-        return view('admin.room_types', ['data' => $room_types]);
+        $customers = Customer::with('roomType')->get();
+        return view('admin.rooms.index', ['data' => $customers]);
     }
 
     /**
@@ -25,7 +26,8 @@ class RoomTypeController extends Controller
      */
     public function create()
     {
-        return view('admin.roomtypes.create');
+        $customertypes = RoomType::all();
+        return view('admin.rooms.create', compact('roomtypes'));
     }
 
     /**
@@ -36,10 +38,10 @@ class RoomTypeController extends Controller
      */
     public function store(Request $request)
     {
-        $rt = new RoomType;
-        $rt->title = $request->title;
-        $rt->details = $request->details;
-        $rt->save();
+        $customer = new Room;
+        $customer->title = $request->title;
+        $customer->room_type_id = $request->room_type_id;
+        $customer->save();
 
         return redirect()->back()->with('success', 'Gornus ustunlikli gosuldy');
     }
@@ -52,9 +54,9 @@ class RoomTypeController extends Controller
      */
     public function show($id)
     {
-        $rt = RoomType::find($id);
+        $customer = Customer::find($id);
 
-        return view('admin.roomtypes.show', compact('rt'));
+        return view('admin.rooms.show', compact('room'));
     }
 
     /**
@@ -65,8 +67,9 @@ class RoomTypeController extends Controller
      */
     public function edit($id)
     {
-        $rt = RoomType::find($id);
-        return view('admin.roomtypes.edit', compact('rt'));
+        $customer = Customer::find($id);
+        $customertypes = RoomType::all();
+        return view('admin.rooms.edit', compact('room', 'roomtypes'));
     }
 
     /**
@@ -78,13 +81,12 @@ class RoomTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $rt = RoomType::find($id);
-        $rt->title = $request->title;
-        $rt->details = $request->details;
+        $customer = Customer::find($id);
+        $customer->title = $request->title;
+        $customer->room_type_id = $request->room_type_id;
+        $customer->save();
 
-        $rt->save();
-
-        return redirect()->back()->with('success', 'Otag gornusi uytgedildi');
+        return redirect()->back()->with('success', 'Otag ustunlikli uytgedildi');
     }
 
     /**
@@ -95,8 +97,8 @@ class RoomTypeController extends Controller
      */
     public function destroy($id)
     {
-        RoomType::destroy($id);
+        Customer::destroy($id);
 
-        return redirect()->back()->withSuccess('Otag gornusi ocurildi');
+        return redirect()->back()->withSuccess('Otag ocurildi');
     }
 }

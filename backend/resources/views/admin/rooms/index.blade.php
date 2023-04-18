@@ -5,8 +5,8 @@
         <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Otaglaryň görnüşleri</h3>
-                <a href="{{ route('room-types.create') }}" class="float-right btn btn-success">Täze görnüş goşmak</a>
+                <h3 class="card-title">Otaglar</h3>
+                <a href="{{ route('rooms.create') }}" class="float-right btn btn-success">Täze Otag goşmak</a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -14,22 +14,24 @@
                     <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" aria-describedby="example2_info">
                         <thead>
                             <tr>
-                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">#</th>
-                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Ady</th>
-                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending"></th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">#</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Ady</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Görnüşi</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"></th>
                             </tr>
                         </thead>
                         <tbody>
 
                             @if ($data)
-                                @foreach($data as $rt)
+                                @foreach($data as $room)
                                     <tr>
-                                        <td>{{ $rt->id }}</td>
-                                        <td>{{ $rt->title }}</td>
+                                        <td>{{ $room->id }}</td>
+                                        <td>{{ $room->title }}</td>
+                                        <td>{{ $room->roomType->title }}</td>
                                         <td class="d-flex">
-                                            <a href="{{ route('room-types.show', $rt->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
-                                            <a class="btn btn-sm btn-info" href="{{ route('room-types.edit', $rt->id) }}"><i class="fa fa-edit"></i></a>
-                                            <form method="POST" action="{{ route('room-types.destroy', $rt->id) }}">
+                                            <a href="{{ route('rooms.show', $room->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
+                                            <a class="btn btn-sm btn-info" href="{{ route('rooms.edit', $room->id) }}"><i class="fa fa-edit"></i></a>
+                                            <form method="POST" action="{{ route('rooms.destroy', $room->id) }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
@@ -37,6 +39,9 @@
                                         </td>
                                     </tr>
                                 @endforeach
+
+                            @else
+                                <p>Su wagtlykca otaglar girizilmedik</p>
                             @endif
 
                         </tbody>

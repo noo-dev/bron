@@ -5,6 +5,8 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\RoomTypeController;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +30,6 @@ Route::get('/rooms', [PageController::class, 'rooms'])->name('roomsPage');
 Route::group(['prefix' => 'adminka'], function() {
     Route::get('/customers', [AdminController::class, 'customers'])->name('customersPage');
     Route::resource('room-types', RoomTypeController::class);
+    Route::resource('rooms', RoomController::class);
+    Route::resource('customers', CustomerController::class);
 });
