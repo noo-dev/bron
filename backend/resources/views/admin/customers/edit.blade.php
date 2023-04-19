@@ -3,33 +3,54 @@
 @section('content')
     <div class="card card-primary">
         <div class="card-header">
-        <h3 class="card-title">Otag görnüşini üýtget</h3>
+        <h3 class="card-title">Müşderi maglumatlaryny üýtgetmek üýtget</h3>
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form method="POST" action="{{ route('room-types.update', $room->id) }}">
+        <form method="POST" action="{{ route('customers.update') }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
         <div class="card-body">
             @if (Session::has('success'))
-                <p class="text-success">{{ session('success') }}</p>
+                <div class="alert alert-success">{{ session('success') }}</div>
             @endif
+
+            @if ( $errors->any() )
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+
+                </div>
+
+            @endif
+
             <div class="form-group">
-            <label for="title">Otagyn ady</label>
-            <input type="text" class="form-control" value="{{ $room->title }}" name="title" id="title" placeholder="">
+            <label for="full_name">Ady we familiýasy</label>
+            <input type="text" class="form-control" name="full_name" id="full_name" placeholder="">
             </div>
             <div class="form-group">
-                <label for="room_type_id">Görnüşi</label>
-                <select name="room_type_id" id="room_type_id" class="form-control">
-                    @foreach($roomtypes as $rt)
-                        <option
-                            value="{{ $rt->id }}"
-                            @if($room->room_type_id === $rt->id) selected @endif
-                            >
-                            {{ $rt->title }}
-                        </option>
-                    @endforeach
-                </select>
+            <label for="full_name">Email</label>
+            <input type="email" class="form-control" name="email" id="email" placeholder="">
+            </div>
+            <div class="form-group">
+            <label for="password">Parol</label>
+            <input type="password" class="form-control" name="password" id="password" placeholder="">
+            </div>
+            <div class="form-group">
+            <label for="password">Mobilny</label>
+            <input type="text" class="form-control" name="mobile" id="mobile" placeholder="">
+            </div>
+            <div class="form-group">
+            <label for="photo">Suraty</label>
+            <input type="hidden" name="prev_photo" value="{{ $c->photo }}">
+            <input type="file" class="form-control" name="photo" id="photo" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="address">Salgysy</label>
+                <textarea name="address" id="address" class="form-control" cols="30" rows="5"></textarea>
             </div>
         </div>
         </div>

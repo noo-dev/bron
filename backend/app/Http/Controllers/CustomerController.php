@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Http\Controllers\CustomerController;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
@@ -15,8 +16,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::with('roomType')->get();
-        return view('admin.rooms.index', ['data' => $customers]);
+        $customers = Customer::all();
+        return view('admin.customers.index', ['data' => $customers]);
     }
 
     /**
@@ -26,8 +27,8 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        $customertypes = RoomType::all();
-        return view('admin.rooms.create', compact('roomtypes'));
+        $customers = Customer::all();
+        return view('admin.customers.create', compact('customers'));
     }
 
     /**
@@ -38,12 +39,30 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $customer = new Room;
-        $customer->title = $request->title;
-        $customer->room_type_id = $request->room_type_id;
-        $customer->save();
 
-        return redirect()->back()->with('success', 'Gornus ustunlikli gosuldy');
+        $request->validate([
+            'full_name' => 'required',
+            'email' => 'email|required',
+            'password' => 'required',
+            'mobile' => 'required'
+        ]);
+
+        $c = new Customer;
+        $c->full_name = $request->full_name;
+        $c->email = $request->email;
+        $c->password = sha1($request->password);
+        $c->mobile = $request->mobile;
+        $c->address = $request->address;
+
+        if ($request->has('photo')) {
+            $c->photo = $request->photo->store('customer_images');
+        } else {
+            $c->photo = 'customer_images/nophoto.jpg';
+        }
+
+        $c->save();
+
+        return redirect()->back()->with('success', 'Musderi ustunlikli registrasiya boldy');
     }
 
     /**
@@ -56,7 +75,7 @@ class CustomerController extends Controller
     {
         $customer = Customer::find($id);
 
-        return view('admin.rooms.show', compact('room'));
+        return view('admin.customers.show', compact('customer'));
     }
 
     /**
@@ -68,7 +87,7 @@ class CustomerController extends Controller
     public function edit($id)
     {
         $customer = Customer::find($id);
-        $customertypes = RoomType::all();
+        $customertypes = Cuttomer::all();
         return view('admin.rooms.edit', compact('room', 'roomtypes'));
     }
 

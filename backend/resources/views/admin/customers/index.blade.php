@@ -5,8 +5,8 @@
         <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Otaglar</h3>
-                <a href="{{ route('rooms.create') }}" class="float-right btn btn-success">Täze Otag goşmak</a>
+                <h3 class="card-title">Müşderiler</h3>
+                <a href="{{ route('customers.create') }}" class="float-right btn btn-success">Täze Müşderi</a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -15,23 +15,25 @@
                         <thead>
                             <tr>
                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">#</th>
-                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Ady</th>
-                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Görnüşi</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Familiýasy we ady</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Email</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Telefon</th>
                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"></th>
                             </tr>
                         </thead>
                         <tbody>
 
                             @if ($data)
-                                @foreach($data as $room)
+                                @foreach($data as $customer)
                                     <tr>
-                                        <td>{{ $room->id }}</td>
-                                        <td>{{ $room->title }}</td>
-                                        <td>{{ $room->roomType->title }}</td>
+                                        <td>{{ $customer->id }}</td>
+                                        <td>{{ $customer->full_name }}</td>
+                                        <td>{{ $customer->email }}</td>
+                                        <td>{{ $customer->mobile }}</td>
                                         <td class="d-flex">
-                                            <a href="{{ route('rooms.show', $room->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
-                                            <a class="btn btn-sm btn-info" href="{{ route('rooms.edit', $room->id) }}"><i class="fa fa-edit"></i></a>
-                                            <form method="POST" action="{{ route('rooms.destroy', $room->id) }}">
+                                            <a href="{{ route('customers.show', $customer->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
+                                            <a class="btn btn-sm btn-info" href="{{ route('customers.edit', $customer->id) }}"><i class="fa fa-edit"></i></a>
+                                            <form method="POST" action="{{ route('customers.destroy', $customer->id) }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
@@ -48,7 +50,9 @@
                         <tfoot>
                             <tr>
                                 <th rowspan="1" colspan="1">#</th>
-                                <th rowspan="1" colspan="1">Ady</th>
+                                <th rowspan="1" colspan="1">Familiýasy we ady</th>
+                                <th rowspan="1" colspan="1">Email</th>
+                                <th rowspan="1" colspan="1">Telefon</th>
                                 <th rowspan="1" colspan="1"></th>
                             </tr>
                         </tfoot>

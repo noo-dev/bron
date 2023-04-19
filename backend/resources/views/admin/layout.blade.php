@@ -150,7 +150,7 @@
                 </a>
             </li> --}}
             <li class="nav-item">
-                <a href="{{ route('customersPage') }}" class="nav-link">
+                <a href="{{ route('customers.index') }}" class="nav-link">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                     Müşderiler
@@ -158,7 +158,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('customersPage') }}" class="nav-link">
+                <a href="{{ route('rooms.index') }}" class="nav-link">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                     Otaglar
