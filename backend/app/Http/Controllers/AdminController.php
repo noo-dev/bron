@@ -6,13 +6,23 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function customers()
+    public function login()
     {
-        return view('admin.customers');
+        return view('admin.login');
     }
 
-    public function rooms()
+    public function auth(Request $request)
     {
-        return view('admin.rooms');
+
+    }
+
+    public function logout()
+    {
+
+    }
+
+    public function register()
+    {
+
     }
 }

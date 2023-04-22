@@ -15,8 +15,12 @@
                 <p class="text-success">{{ session('success') }}</p>
             @endif
             <div class="form-group">
-            <label for="title">Görnüşiň ady</label>
-            <input type="text" class="form-control" value="{{ $rt->title }}" name="title" id="title" placeholder="">
+                <label for="title">Görnüşiň ady</label>
+                <input type="text" class="form-control" value="{{ $rt->title }}" name="title" id="title" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="price">Bahasy</label>
+                <input type="number" class="form-control" name="price" id="price" value="{{ $rt->price }}">
             </div>
             <div class="form-group">
                 <label for="details">Giňişleýin...</label>

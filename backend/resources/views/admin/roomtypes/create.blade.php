@@ -18,6 +18,10 @@
             <input type="text" class="form-control" name="title" id="title" placeholder="">
             </div>
             <div class="form-group">
+            <label for="price">Bahasy</label>
+            <input type="number" class="form-control" name="price" id="price">
+            </div>
+            <div class="form-group">
                 <label for="details">Giňişleýin...</label>
                 <textarea class="form-control" name="details" id="tetails" cols="100" rows="10"></textarea>
             </div>

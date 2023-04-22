@@ -15,7 +15,7 @@ class RoomTypeController extends Controller
     public function index()
     {
         $room_types = RoomType::all();
-        return view('admin.room_types', ['data' => $room_types]);
+        return view('admin.roomtypes.index', ['data' => $room_types]);
     }
 
     /**
@@ -38,6 +38,7 @@ class RoomTypeController extends Controller
     {
         $rt = new RoomType;
         $rt->title = $request->title;
+        $rt->price = $request->price;
         $rt->details = $request->details;
         $rt->save();
 
@@ -80,6 +81,7 @@ class RoomTypeController extends Controller
     {
         $rt = RoomType::find($id);
         $rt->title = $request->title;
+        $rt->price = $request->price;
         $rt->details = $request->details;
 
         $rt->save();

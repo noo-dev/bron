@@ -8,7 +8,7 @@
         <!-- /.card-header -->
 
         <div class="card-body">
-            <table>
+            <table class="table">
                 <tr>
                     <td>Ady</td>
                     <td>{{ $rt->title }}</td>
@@ -16,6 +16,10 @@
                 <tr>
                     <td>Maglumat</td>
                     <td>{{ $rt->details }}</td>
+                </tr>
+                <tr>
+                    <td>Bahasy</td>
+                    <td>{{ $rt->price }}</td>
                 </tr>
             </table>
         </div>

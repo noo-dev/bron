@@ -87,8 +87,7 @@ class CustomerController extends Controller
     public function edit($id)
     {
         $customer = Customer::find($id);
-        $customertypes = Cuttomer::all();
-        return view('admin.rooms.edit', compact('room', 'roomtypes'));
+        return view('admin.customers.edit', ['c' => $customer]);
     }
 
     /**
@@ -100,12 +99,33 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $customer = Customer::find($id);
-        $customer->title = $request->title;
-        $customer->room_type_id = $request->room_type_id;
-        $customer->save();
+        $request->validate([
+            'full_name' => 'required',
+            'email' => 'email|required',
+            'mobile' => 'required'
+        ]);
 
-        return redirect()->back()->with('success', 'Otag ustunlikli uytgedildi');
+        $c =  Customer::find($id);
+        $c->full_name = $request->full_name;
+        $c->email = $request->email;
+        $c->mobile = $request->mobile;
+        $c->address = $request->address;
+
+        if ($request->has('photo')) {
+            $c->photo = $request->photo->store('customer_images');
+        } else {
+            $c->photo = 'customer_images/nophoto.jpg';
+        }
+
+        if ( $request->hasFile('photo') ) {
+            $c->photo = $request->photo->store('customer_images');
+        } else {
+            $c->photo = $request->prev_photo;
+        }
+
+        $c->save();
+
+        return redirect()->back()->with('success', 'Müşderi maglumatlary üýtgedildi');
     }
 
     /**

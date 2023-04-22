@@ -16,6 +16,7 @@
                             <tr>
                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">#</th>
                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Ady</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending">Bahasy</th>
                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending"></th>
                             </tr>
                         </thead>
@@ -26,6 +27,7 @@
                                     <tr>
                                         <td>{{ $rt->id }}</td>
                                         <td>{{ $rt->title }}</td>
+                                        <td>{{ $rt->price }}</td>
                                         <td class="d-flex">
                                             <a href="{{ route('room-types.show', $rt->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
                                             <a class="btn btn-sm btn-info" href="{{ route('room-types.edit', $rt->id) }}"><i class="fa fa-edit"></i></a>
@@ -44,6 +46,7 @@
                             <tr>
                                 <th rowspan="1" colspan="1">#</th>
                                 <th rowspan="1" colspan="1">Ady</th>
+                                <th rowspan="1" colspan="1">Bahasy</th>
                                 <th rowspan="1" colspan="1"></th>
                             </tr>
                         </tfoot>
