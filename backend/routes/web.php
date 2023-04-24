@@ -19,20 +19,18 @@ use App\Http\Controllers\CustomerController;
 |
 */
 
-Route::get('/adminka', function () {
-    return view('admin.index');
-});
 
 Route::get('/', [PageController::class, 'index'])->name('homePage');
 Route::post('/check', [BookingController::class, 'check'])->name('checkBooking');
 Route::get('/rooms', [PageController::class, 'rooms'])->name('roomsPage');
 
 Route::group(['prefix' => 'adminka'], function() {
-    Route::get('/', [PageController::class, 'admin']);
+    Route::get('/', [PageController::class, 'admin'])->name('adminka');
 
     // login & register
-    Route::get('/login', [AdminController::class, 'login']);
+    Route::get('/login', [AdminController::class, 'login'])->name('admin.login');
     Route::post('/auth', [AdminController::class, 'auth'])->name('admin.auth');
+    Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
     // CRUD operations
     Route::resource('room-types', RoomTypeController::class);

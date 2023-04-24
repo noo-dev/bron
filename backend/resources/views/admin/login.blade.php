@@ -23,10 +23,24 @@
   <div class="card">
     <div class="card-body login-card-body">
 
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if(Session::has('msg'))
+            <div class="alert alert-danger">{{ session('msg') }}</div>
+        @endif
+
       <form action="{{ route('admin.auth') }}" method="post">
         @csrf
         <div class="input-group mb-3">
-          <input type="name" class="form-control" placeholder="name">
+          <input type="text" name="name" class="form-control" placeholder="Ady">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-person"></span>
@@ -34,7 +48,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="password" class="form-control" name="password" placeholder="Parol">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -44,7 +58,7 @@
         <div class="row">
           <div class="col-8">
             <div class="icheck-primary">
-              <input type="checkbox" id="remember">
+              <input type="checkbox" id="remember" name="remember">
               <label for="remember">
                 Ýatda sakla
               </label>

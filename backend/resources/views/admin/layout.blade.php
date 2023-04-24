@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Dashboard</title>
 
+
+
+  @if (!Session::has('adminData'))
+    <script type="text/javascript">
+        window.location.href = "{{ route('admin.login') }}";
+    </script>
+  @endif
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -21,6 +29,7 @@
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css"> --}}
   <!-- summernote -->
   {{-- <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css"> --}}
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
@@ -162,6 +171,15 @@
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                     Otaglar
+                </p>
+                </a>
+            </li>
+            <hr>
+            <li class="nav-item">
+                <a href="{{ route('admin.logout') }}" class="nav-link">
+                <i class="nav-icon fas fa-sign-out-alt"></i>
+                <p>
+                    Logout
                 </p>
                 </a>
             </li>
