@@ -26,6 +26,22 @@
                 <label for="details">Giňişleýin...</label>
                 <textarea class="form-control" name="details" id="tetails" cols="100" rows="10">{{ $rt->details }}</textarea>
             </div>
+            <div class="d-flex">
+                <label>Suratlar</label>
+                @foreach($rt->images as $img)
+                    <div class="mr-5">
+                        <img src="{{ asset('storage/' . $img->img_src) }}" alt="{{ $img->img_alt }}" height="200" />
+                        <p class="mt-2">
+                            <button
+                                class="btn btn-danger btn-sm delete-img"
+                                onclick="return confirm('Siz hakykatdanam bu suraty ocurmekcimi?')"
+                                data-img_id="{{ $img->id }}"
+                                type="button"
+                            ><i class="fa fa-trash"></i></button>
+                        </p>
+                    </div>
+                @endforeach
+            </div>
         </div>
         </div>
         <!-- /.card-body -->
@@ -34,4 +50,30 @@
         </div>
         </form>
   </div>
+@endsection
+
+
+@section('scripts')
+  <script>
+    $(document).ready(function() {
+        $('button.delete-img').on('click', function(e) {
+            var img_id = $(this).data('img_id');
+            var _vm = $(this);
+            $.ajax({
+                url: "{{ url('adminka/roomtypeimage/delete') }}/" + img_id,
+                data: {
+
+                },
+                dataType: 'json',
+                beforeSend: function() {
+                    _vm.addClass('disabled');
+                },
+                success: function() {
+                    _vm.removeClass('disabled');
+                    _vm.closest('div').remove();
+                }
+            });
+        });
+    });
+  </script>
 @endsection

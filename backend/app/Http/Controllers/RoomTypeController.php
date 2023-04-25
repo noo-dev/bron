@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 use App\Models\RoomType;
+use App\Models\RoomTypeImage;
+
+
+
 
 class RoomTypeController extends Controller
 {
@@ -36,11 +42,26 @@ class RoomTypeController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+            'title' => 'required',
+            'price' => 'required',
+            'details' => 'required'
+        ]);
+
         $rt = new RoomType;
         $rt->title = $request->title;
         $rt->price = $request->price;
         $rt->details = $request->details;
         $rt->save();
+
+        foreach($request->images as $img) {
+            $rti = new RoomTypeImage;
+            $rti->room_type_id = $rt->id;
+            $rti->img_src = $img->store('room_type_images');
+            $rti->img_alt = $request->title . ' image';
+            $rti->save();
+        }
 
         return redirect()->back()->with('success', 'Gornus ustunlikli gosuldy');
     }
@@ -101,4 +122,13 @@ class RoomTypeController extends Controller
 
         return redirect()->back()->withSuccess('Otag gornusi ocurildi');
     }
+
+    public function delete_image(Request $request, $id)
+    {
+        $img = RoomTypeImage::where('id', $id)->first();
+        Storage::delete($img->img_src);
+        RoomTypeImage::where('id', $id)->delete();
+        return response()->json(['bool' => true]);
+    }
+
 }

@@ -40,7 +40,10 @@
       <form action="{{ route('admin.auth') }}" method="post">
         @csrf
         <div class="input-group mb-3">
-          <input type="text" name="name" class="form-control" placeholder="Ady">
+          <input
+            type="text" name="name" class="form-control" placeholder="Ady"
+            @if (Cookie::has('adminuser')) value="{{ Cookie::get('adminuser') }}" @endif
+          >
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-person"></span>
@@ -48,7 +51,10 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" name="password" placeholder="Parol">
+          <input
+            type="password" class="form-control" name="password" placeholder="Parol"
+            @if(Cookie::has('adminpwd')) value="{{ Cookie::get('adminpwd') }}" @endif
+          >
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -58,7 +64,10 @@
         <div class="row">
           <div class="col-8">
             <div class="icheck-primary">
-              <input type="checkbox" id="remember" name="remember">
+              <input
+                type="checkbox" id="remember" name="remember"
+                @if(Cookie::has('adminuser')) checked @endif
+              >
               <label for="remember">
                 Ýatda sakla
               </label>

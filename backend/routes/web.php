@@ -36,4 +36,7 @@ Route::group(['prefix' => 'adminka'], function() {
     Route::resource('room-types', RoomTypeController::class);
     Route::resource('rooms', RoomController::class);
     Route::resource('customers', CustomerController::class);
+
+    // delete roomtype image
+    Route::get('/roomtypeimage/delete/{id}', [RoomTypeController::class, 'delete_image'])->name('delete.rti');
 });

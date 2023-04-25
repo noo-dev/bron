@@ -7,7 +7,7 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form method="POST" action="{{ route('room-types.store') }}">
+        <form method="POST" action="{{ route('room-types.store') }}" enctype="multipart/form-data">
             @csrf
         <div class="card-body">
             @if (Session::has('success'))
@@ -24,6 +24,10 @@
             <div class="form-group">
                 <label for="details">Giňişleýin...</label>
                 <textarea class="form-control" name="details" id="tetails" cols="100" rows="10"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="imamges">Suratlar</label>
+                <input type="file" multiple name="images[]" >
             </div>
         </div>
         </div>
