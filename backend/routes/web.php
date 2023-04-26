@@ -7,6 +7,8 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\RoomTypeController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\StaffController;
+use App\Http\Controllers\StaffDepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +38,8 @@ Route::group(['prefix' => 'adminka'], function() {
     Route::resource('room-types', RoomTypeController::class);
     Route::resource('rooms', RoomController::class);
     Route::resource('customers', CustomerController::class);
+    Route::resource('staffs', StaffController::class);
+    Route::resource('departments', StaffDepartmentController::class);
 
     // delete roomtype image
     Route::get('/roomtypeimage/delete/{id}', [RoomTypeController::class, 'delete_image'])->name('delete.rti');

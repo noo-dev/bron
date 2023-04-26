@@ -7,7 +7,7 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form method="POST" action="{{ route('room-types.update', $rt->id) }}">
+        <form method="POST" action="{{ route('room-types.update', $rt->id) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
         <div class="card-body">
@@ -25,6 +25,10 @@
             <div class="form-group">
                 <label for="details">Giňişleýin...</label>
                 <textarea class="form-control" name="details" id="tetails" cols="100" rows="10">{{ $rt->details }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="images">Surat goşmak</label>
+                <input type="file" multiple class="form-control" name="images[]" id="images">
             </div>
             <div class="d-flex">
                 <label>Suratlar</label>

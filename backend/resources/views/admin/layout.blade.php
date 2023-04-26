@@ -130,7 +130,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="./index.html" class="nav-link active">
+                    <a href="./index.html" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Dashboard v1</p>
                     </a>
@@ -173,6 +173,29 @@
                     Otaglar
                 </p>
                 </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('departments.index') }}" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                    Bölümler
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+                </a>
+                <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('departments.index') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Hemmesi</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('departments.create') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Täze goşmak</p>
+                    </a>
+                </li>
+                </ul>
             </li>
             <hr>
             <li class="nav-item">

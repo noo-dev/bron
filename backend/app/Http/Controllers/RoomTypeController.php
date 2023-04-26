@@ -104,8 +104,17 @@ class RoomTypeController extends Controller
         $rt->title = $request->title;
         $rt->price = $request->price;
         $rt->details = $request->details;
-
         $rt->save();
+
+        if ($request->hasFile('images')) {
+            foreach ($request->images as $img) {
+                $rti = new RoomTypeImage;
+                $rti->room_type_id = $rt->id;
+                $rti->img_src = $img->store('room_type_images');
+                $rti->img_alt = $request->title . ' image';
+                $rti->save();
+            }
+        }
 
         return redirect()->back()->with('success', 'Otag gornusi uytgedildi');
     }
