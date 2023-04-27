@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\StaffDepartment;
+use App\Models\Staff;
+
 class StaffController extends Controller
 {
     /**
@@ -13,7 +16,8 @@ class StaffController extends Controller
      */
     public function index()
     {
-        //
+        $data = Staff::all();
+        return view('admin.staffs.index', compact('data'));
     }
 
     /**
@@ -23,7 +27,8 @@ class StaffController extends Controller
      */
     public function create()
     {
-        //
+        $departments = StaffDepartment::all();
+        return view('admin.staffs.create', compact('departments'));
     }
 
     /**
@@ -34,7 +39,14 @@ class StaffController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $staff = new Staff;
+        $staff->full_name = $request->full_name;
+        $staff->staff_department_id = $request->department_id;
+        $staff->photo = $request->photo->store('staff');
+        $staff->bio = $request->bio;
+        $staff->salary_type = $request->salary_type;
+        $staff->salary_amt = $request->salary_amt;
+        $staff->save();
     }
 
     /**
@@ -45,7 +57,8 @@ class StaffController extends Controller
      */
     public function show($id)
     {
-        //
+        $staff = Staff::find($id);
+        return view('admin.staffs.show', compact('staff'));
     }
 
     /**
@@ -56,7 +69,7 @@ class StaffController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
