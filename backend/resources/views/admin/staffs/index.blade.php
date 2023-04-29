@@ -28,10 +28,11 @@
                                     <tr>
                                         <td>{{ $staff->id }}</td>
                                         <td>{{ $staff->full_name }}</td>
-                                        <td><img src="{{ asset('storage/' . $staff->photo ) }}" /></td>
+                                        <td><img height="100" src="{{ asset('storage/' . $staff->photo ) }}" /></td>
                                         <td>{{ $staff->department->title }}</td>
                                         <td class="d-flex">
                                             <a href="{{ route('staffs.show', $staff->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
+                                            <a href="{{ route('staff.payment', $staff->id) }}" class="btn btn-info btn-sm"><i class="fa fa-credit-card"></i></a>
                                             <a class="btn btn-sm btn-info" href="{{ route('staffs.edit', $staff->id) }}"><i class="fa fa-edit"></i></a>
                                             <form method="POST" action="{{ route('staffs.destroy', $staff->id) }}">
                                                 @csrf

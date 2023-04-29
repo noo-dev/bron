@@ -7,7 +7,7 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        <form method="POST" action="{{ route('staffs.update', $staff->id) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('staffs.store') }}" enctype="multipart/form-data">
             @csrf
         <div class="card-body">
             @if (Session::has('success'))
@@ -15,7 +15,7 @@
             @endif
             <div class="form-group">
             <label for="full_name">Familiýasy we ady</label>
-            <input type="text" class="form-control" name="full_name" id="full_name" value="full_name">
+            <input type="text" class="form-control" name="full_name" id="full_name">
             </div>
             <div class="form-group">
                 <label for="department_id">Bölümi saýla</label>
@@ -23,7 +23,6 @@
                     @foreach ($departments as $dep)
                         <option
                             value="{{ $dep->id }}"
-                            @if($staff->staff_department_id === $dep->id) selected @endif
                         >{{ $dep->title }}</option>
                     @endforeach
                 </select>
@@ -31,21 +30,19 @@
             <div class="form-group">
                 <label for="photo">Suraty</label>
                 <input type="file" name="photo" class="form-control">
-                <input type="hidden" name="prev_photo" value="{{ $staff->photo }}" />
-                <img src="{{ asset('storage/' . $staff->photo) }}" width="100" height="100" style="object-fit: contain" />
             </div>
             <div class="form-group">
                 <label for="bio">Maglumat</label>
-                <textarea name="bio" id="bio" class="form-control">{{ $staff->bio }}</textarea>
+                <textarea name="bio" id="bio" class="form-control"></textarea>
             </div>
             <div class="form-group">
                 <label for="salary_type">Toleg gornusi: </label>
-                <input type="radio" name="salary_type" value="daily" @if($staff->salary_type ==== 'daily') checked @endif> Günlük
-                <input type="radio" name="salary_type" value="monthly" @if($staff->salary_type ==== 'daily') checked @endif> Aýlyk
+                <input type="radio" name="salary_type" value="daily"> Günlük
+                <input type="radio" name="salary_type" value="monthly"> Aýlyk
             </div>
             <div class="form-group">
                 <label for="salary_amt">Toleg mukdary</label>
-                <input type="number" name="salary_amt" id="salary_amt" class="form-control" value="{{ $staff->salary_amt }}">
+                <input type="number" name="salary_amt" id="salary_amt" class="form-control">
             </div>
         </div>
         </div>

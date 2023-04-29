@@ -38,8 +38,13 @@ Route::group(['prefix' => 'adminka'], function() {
     Route::resource('room-types', RoomTypeController::class);
     Route::resource('rooms', RoomController::class);
     Route::resource('customers', CustomerController::class);
-    Route::resource('staffs', StaffController::class);
     Route::resource('departments', StaffDepartmentController::class);
+
+    Route::get('staffs/payment/{id}', [StaffController::class, 'payment'])->name('staff.payment');
+    Route::post('/staffs/payment/{id}', [StaffController::class, 'payment_store'])->name('staffs.payment.store');
+
+    Route::resource('staffs', StaffController::class);
+
 
     // delete roomtype image (ajax request)
     Route::get('/roomtypeimage/delete/{id}', [RoomTypeController::class, 'delete_image'])->name('delete.rti');
