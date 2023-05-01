@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Booking;
+use App\Models\Customer;
 
 class BookingController extends Controller
 {
-    public function check(Request $request)
+    public function create()
     {
-        dd($request->all());
+
+        $customers = Customer::all();
+        return view('admin.bookings.create', ['customers' => $customers]);
     }
 
     public function store($request)

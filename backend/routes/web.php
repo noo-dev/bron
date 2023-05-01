@@ -49,3 +49,5 @@ Route::group(['prefix' => 'adminka'], function() {
     // delete roomtype image (ajax request)
     Route::get('/roomtypeimage/delete/{id}', [RoomTypeController::class, 'delete_image'])->name('delete.rti');
 });
+
+Route::resource('adminka/bookings', BookingController::class);
