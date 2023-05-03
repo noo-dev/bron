@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Booking;
 use App\Models\Customer;
 
@@ -20,5 +21,13 @@ class BookingController extends Controller
         if ($this->check()) {
             Booking::save($request->all());
         }
+    }
+
+
+    // Check available rooms
+    public function check_available_rooms(Request $request, $checkin_date)
+    {
+        $rooms = DB::SELECT("SELECT * FROM rooms WHERE id NOT IN (SELECT room_id FROM bookings WHERE '$checkin_date' BETWEEN checkin_date AND checkout_date)");
+        return response()->json($rooms);
     }
 }

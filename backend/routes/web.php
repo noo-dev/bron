@@ -50,4 +50,6 @@ Route::group(['prefix' => 'adminka'], function() {
     Route::get('/roomtypeimage/delete/{id}', [RoomTypeController::class, 'delete_image'])->name('delete.rti');
 });
 
+// Booking routes
 Route::resource('adminka/bookings', BookingController::class);
+Route::get('adminka/bookings/{checkin_date}/available-rooms', [BookingController::class, 'check_available_rooms']);
