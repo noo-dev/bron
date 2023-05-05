@@ -29,15 +29,13 @@
                 <label for="checkout_date"> Tamamlanýan senesi</label>
                 <input type="date" name="checkout_date" id="checkout_date" class="form-control checkoutdate" />
             </div>
+            <div>
+                <button id="ajax-btn" class="btn btn-info">Barla!</button>
+            </div>
             <div class="form-group">
                 <label>Elýeterli otaglar</label>
-                <!-- <input type="date" name="total_adults" id="total_adults" /> -->
-                {{-- <select name="room_id">
-                    @foreach($rooms as $room)
-                        <option value="{{ $room->id }}">{{ $room->title }}</option>
-                    @endforeach
-                </select> --}}
-
+                <select name="room_id" class="form-control room-list">
+                </select>
             </div>
             <div class="form-group">
                 <label for="total_adults">Uly adamlar</label>
@@ -60,7 +58,7 @@
 @section('scripts')
   <script>
     $(document).ready(function() {
-        $('.checkindate').on('blur', function() {
+        $('.checkindate').on('change', function() {
             var _checkindate = $(this).val();
             // Ajax
             $.ajax({
@@ -68,14 +66,37 @@
                 method: "get",
                 dataType: "json",
                 success: function(res) {
-                    console.log(res)
+                    $('select.room-list').empty();
+                    var data = '';
+                    res.forEach(element => {
+                        data += `<option value="${element.id}">${element.title}</option>`
+                    });
+                    $('select.room-list').append(data)
                 }
             });
-        });
 
-        $('.checkoutdate').on('blur', function() {
-            var _checkoutdate = $(this).val();
-            console.log(_checkoutdate);
+
+        }); // end of $('.checkindate')
+
+        $('#ajax-btn').on('click', function(e) {
+            e.preventDefault();
+            var __checkin = $('#checkin_date').val();
+            var __checkout = $('#checkout_date').val();
+            if (__checkin !== '' && __checkout !== '') {
+                $.ajax({
+                url: "{{ url('adminka/bookings/check/available-rooms') }}" + `?in=${__checkin}&out=${__checkout}`,
+                method: "get",
+                dataType: "json",
+                success: function(res) {
+                    $('select.room-list').empty();
+                    var data = '';
+                    res.forEach(element => {
+                        data += `<option value="${element.id}">${element.title}</option>`
+                    });
+                    $('select.room-list').append(data)
+                }
+            });
+            }
         });
     });
   </script>

@@ -52,4 +52,4 @@ Route::group(['prefix' => 'adminka'], function() {
 
 // Booking routes
 Route::resource('adminka/bookings', BookingController::class);
-Route::get('adminka/bookings/{checkin_date}/available-rooms', [BookingController::class, 'check_available_rooms']);
+Route::get('adminka/bookings/check/available-rooms', [BookingController::class, 'check_available_rooms']);

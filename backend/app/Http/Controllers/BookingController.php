@@ -16,11 +16,9 @@ class BookingController extends Controller
         return view('admin.bookings.create', ['customers' => $customers]);
     }
 
-    public function store($request)
+    public function store(Request $request)
     {
-        if ($this->check()) {
-            Booking::save($request->all());
-        }
+        Booking::create($request->all());
     }
 
 
@@ -29,5 +27,5 @@ class BookingController extends Controller
     {
         $rooms = DB::SELECT("SELECT * FROM rooms WHERE id NOT IN (SELECT room_id FROM bookings WHERE '$checkin_date' BETWEEN checkin_date AND checkout_date)");
         return response()->json($rooms);
-    }
+}
 }

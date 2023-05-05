@@ -11,6 +11,8 @@ class Booking extends Model
 
     protected $table = 'bookings';
 
+    protected $guarded = [];
+
     public function room()
     {
         return $this->belongsTo(Room::class, 'room_id');
