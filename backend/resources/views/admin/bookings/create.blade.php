@@ -58,7 +58,7 @@
 @section('scripts')
   <script>
     $(document).ready(function() {
-        $('.checkindate').on('change', function() {
+        /* $('.checkindate').on('change', function() {
             var _checkindate = $(this).val();
             // Ajax
             $.ajax({
@@ -76,7 +76,7 @@
             });
 
 
-        }); // end of $('.checkindate')
+        }); */ // end of $('.checkindate')
 
         $('#ajax-btn').on('click', function(e) {
             e.preventDefault();
@@ -88,6 +88,7 @@
                 method: "get",
                 dataType: "json",
                 success: function(res) {
+                    // console.log(res)
                     $('select.room-list').empty();
                     var data = '';
                     res.forEach(element => {

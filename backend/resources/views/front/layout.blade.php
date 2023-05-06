@@ -253,7 +253,10 @@
     <script src="{{ asset("/front/js/jquery-ui.min.js") }}"></script>
     <script src="{{ asset("/front/js/jquery.slicknav.js") }}"></script>
     <script src="{{ asset("/front/js/owl.carousel.min.js") }}"></script>
+    <script src="{{ asset("/front/js/moment.js") }}"></script>
     <script src="{{ asset("/front/js/main.js") }}"></script>
+
+    @yield('scripts')
 </body>
 
 </html>

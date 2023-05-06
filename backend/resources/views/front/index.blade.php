@@ -16,8 +16,8 @@
                 <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                     <div class="booking-form">
                         <h3>Bron</h3>
-                        <form action="{{ route('checkBooking') }}" method="post">
-                            @csrf
+                        <form action="#">
+
                             <div class="check-date">
                                 <label for="date-in">Başlaýan wagty:</label>
                                 <input type="text" class="date-input" id="date-in" name="date_in">
@@ -43,8 +43,23 @@
                                     <option value="luü">Lýuks</option>
                                 </select>
                             </div>
+                            <div class="select-option">
+                                <label for="room">Elýeterli otaglar:</label>
+                                <select id="available-rooms" name="room_id">
+
+                                </select>
+                                <div class="nice-select open" tabindex="0">
+                                    <span class="current">1</span>
+                                    <ul class="list">
+                                        <li data-value="1" class="option selected focus">1</li>
+                                        <li data-value="2" class="option">2</li>
+                                        <li data-value="3" class="option">3</li>
+                                    </ul>
+                                </div>
+                            </div>
                             <input type="hidden" name="user_id" value="test">
-                            <button type="submit">Barla</button>
+                            <button class="check-btn" type="button">Barla</button>
+                            <button type="submit" style="display: none">test</button>
                         </form>
                     </div>
                 </div>
@@ -402,4 +417,35 @@
     </section> --}}
     <!-- Blog Section End -->
 
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            var availableRooms = $('#available-rooms');
+            $('button.check-btn').on('click', function(e) {
+                availableRooms.empty();
+                var _in = $('#date-in').val();
+                var _out = $('#date-out').val();
+                _in = moment(_in).format('YYYY-MM-DD');
+                _out = moment(_out).format('YYYY-MM-DD');
+
+                $.ajax({
+                url: "{{ url('/adminka/bookings/check/available-rooms') }}" + `?in=${_in}&out=${_out}`,
+                method: "get",
+                dataType: "json",
+                success: function(res) {
+
+                    console.log(res)
+                    var str = '';
+                    res.forEach(function(item) {
+                        str += `<option value="${item.id}">${item.title}</option>`
+                    });
+                    availableRooms.append(str);
+                    }
+                });
+            });
+
+        });
+    </script>
 @endsection
