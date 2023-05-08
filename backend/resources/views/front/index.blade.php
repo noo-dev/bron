@@ -29,33 +29,29 @@
                                 <i class="icon_calendar"></i>
                             </div>
                             <div class="select-option">
-                                <label for="guest">Adam sany:</label>
-                                <select id="guest" name="guest_num">
+                                <label for="adults">Adam sany:</label>
+                                <select id="adults" name="adults">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
+                                    <option value="3">4</option>
                                 </select>
                             </div>
                             <div class="select-option">
-                                <label for="room">Otag görnüşi:</label>
-                                <select id="room" name="rooms_num">
-                                    <option value="regular">Adaty</option>
-                                    <option value="luü">Lýuks</option>
+                                <label for="room_type">Otag görnüşi:</label>
+                                <select id="room_type" name="rooms_type">
+                                    @foreach ($rts as $rt)
+                                    <option value="{{ $rt->id }}">{{ $rt->title }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="select-option">
-                                <label for="room">Elýeterli otaglar:</label>
+                                <label for="available-rooms">Elýeterli otaglar:</label>
                                 <select id="available-rooms" name="room_id">
 
                                 </select>
-                                <div class="nice-select open" tabindex="0">
-                                    <span class="current">1</span>
-                                    <ul class="list">
-                                        <li data-value="1" class="option selected focus">1</li>
-                                        <li data-value="2" class="option">2</li>
-                                        <li data-value="3" class="option">3</li>
-                                    </ul>
-                                </div>
+
+
                             </div>
                             <input type="hidden" name="user_id" value="test">
                             <button class="check-btn" type="button">Barla</button>
@@ -424,27 +420,35 @@
         $(document).ready(function() {
             var availableRooms = $('#available-rooms');
             $('button.check-btn').on('click', function(e) {
+                _btn = $(this)
+                _btn.text('Garaşyň...').prop('disabled', true)
                 availableRooms.empty();
                 var _in = $('#date-in').val();
                 var _out = $('#date-out').val();
+                var _type = $('#room_type').val();
                 _in = moment(_in).format('YYYY-MM-DD');
                 _out = moment(_out).format('YYYY-MM-DD');
-
                 $.ajax({
-                url: "{{ url('/adminka/bookings/check/available-rooms') }}" + `?in=${_in}&out=${_out}`,
+                url: "{{ url('/adminka/bookings/check/available-rooms') }}" + `?in=${_in}&out=${_out}&type=${_type}`,
                 method: "get",
                 dataType: "json",
                 success: function(res) {
 
                     console.log(res)
-                    var str = '';
+                    var str = '<option data-display="Otag saýlaň">Otaglar</option>';
+                    var str2 = '';
                     res.forEach(function(item) {
-                        str += `<option value="${item.id}">${item.title}</option>`
+                        str += `<option value="${item.id}"><strong>${item.roomtype} - </strong>${item.title}</option>`;
+
                     });
-                    availableRooms.append(str);
-                    }
-                });
+                    availableRooms.append(str).niceSelect('update');
+                    _btn.text('Barla').prop('disabled', false)
+                },
+                error: function(e) {
+                    _btn.text('Barla').prop('disabled', false)
+                }
             });
+        });
 
         });
     </script>

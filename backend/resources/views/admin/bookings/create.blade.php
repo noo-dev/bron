@@ -88,7 +88,7 @@
                 method: "get",
                 dataType: "json",
                 success: function(res) {
-                    // console.log(res)
+                    console.log(res)
                     $('select.room-list').empty();
                     var data = '';
                     res.forEach(element => {

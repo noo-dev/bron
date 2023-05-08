@@ -27,7 +27,8 @@ class BookingController extends Controller
     {
         $in = $request->query('in');
         $out = $request->query('out');
-        $rooms = DB::SELECT("SELECT * FROM rooms WHERE id NOT IN (SELECT room_id FROM bookings WHERE (('$in' BETWEEN checkin_date AND checkout_date) OR ('$out' BETWEEN checkin_date AND checkout_date)))");
+        $type = $request->query('type');
+        $rooms = DB::SELECT("SELECT r.id, r.title, rt.title AS roomtype FROM rooms AS r INNER JOIN room_types AS rt ON r.room_type_id = rt.id WHERE r.id NOT IN (SELECT room_id FROM bookings WHERE (('$in' BETWEEN checkin_date AND checkout_date) OR ('$out' BETWEEN checkin_date AND checkout_date))) AND '$type' = r.room_type_id");
         return response()->json($rooms);
     }
 }

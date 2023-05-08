@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\RoomType;
 
 class PageController extends Controller
 {
@@ -22,6 +23,7 @@ class PageController extends Controller
     }
 
     public function admin() {
-        return view('admin.index');
+        $rts = RoomType::all();
+        return view('admin.index', compact('rts'));
     }
 }
