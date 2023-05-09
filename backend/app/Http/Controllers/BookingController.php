@@ -18,6 +18,11 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'customer_id' => 'required',
+            'date_out' => 'required',
+            'date_in' => 'required',
+        ]);
         Booking::create($request->all());
     }
 

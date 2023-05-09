@@ -58,43 +58,28 @@
 @section('scripts')
   <script>
     $(document).ready(function() {
-        /* $('.checkindate').on('change', function() {
-            var _checkindate = $(this).val();
-            // Ajax
-            $.ajax({
-                url: "{{ url('adminka/bookings') }}/" + _checkindate + "/available-rooms",
-                method: "get",
-                dataType: "json",
-                success: function(res) {
-                    $('select.room-list').empty();
-                    var data = '';
-                    res.forEach(element => {
-                        data += `<option value="${element.id}">${element.title}</option>`
-                    });
-                    $('select.room-list').append(data)
-                }
-            });
-
-
-        }); */ // end of $('.checkindate')
-
+        var roomList = $('select.room-list')
         $('#ajax-btn').on('click', function(e) {
+
             e.preventDefault();
             var __checkin = $('#checkin_date').val();
             var __checkout = $('#checkout_date').val();
             if (__checkin !== '' && __checkout !== '') {
                 $.ajax({
-                url: "{{ url('adminka/bookings/check/available-rooms') }}" + `?in=${__checkin}&out=${__checkout}`,
+                url: "{{ url('adminka/bookings/check/available-rooms') }}" + `?in=${__checkin}&out=${__checkout}&type=all`,
                 method: "get",
                 dataType: "json",
+                beforeSend: function() {
+                    roomList.html('<option>Ýüklenýär ...</option>')
+                },
                 success: function(res) {
                     console.log(res)
-                    $('select.room-list').empty();
+                    roomList.empty();
                     var data = '';
                     res.forEach(element => {
                         data += `<option value="${element.id}">${element.title}</option>`
                     });
-                    $('select.room-list').append(data)
+                    roomList.append(data)
                 }
             });
             }

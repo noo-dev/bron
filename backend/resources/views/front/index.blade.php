@@ -24,7 +24,7 @@
                                 <i class="icon_calendar"></i>
                             </div>
                             <div class="check-date">
-                                <label for="date-out">Gutaran wagty:</label>
+                                <label for="date-out">Gutarýan wagty:</label>
                                 <input type="text" class="date-input" id="date-out" name="date_out">
                                 <i class="icon_calendar"></i>
                             </div>
@@ -435,15 +435,13 @@
                 dataType: "json",
                 beforeSend: function() {
                     availableRooms.html('<option>Ýüklenýär<option>');
-                }
+                },
                 success: function(res) {
-
+                    availableRooms.empty();
                     console.log(res)
                     var str = '<option data-display="Otag saýlaň">Otaglar</option>';
-                    var str2 = '';
                     res.forEach(function(item) {
                         str += `<option value="${item.id}"><strong>${item.roomtype} - </strong>${item.title}</option>`;
-
                     });
                     availableRooms.append(str).niceSelect('update');
                     _btn.text('Barla').prop('disabled', false)
