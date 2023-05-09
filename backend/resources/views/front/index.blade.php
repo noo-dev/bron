@@ -40,6 +40,7 @@
                             <div class="select-option">
                                 <label for="room_type">Otag görnüşi:</label>
                                 <select id="room_type" name="rooms_type">
+                                    <option value="all">Hemmesi</option>
                                     @foreach ($rts as $rt)
                                     <option value="{{ $rt->id }}">{{ $rt->title }}</option>
                                     @endforeach
@@ -432,6 +433,9 @@
                 url: "{{ url('/adminka/bookings/check/available-rooms') }}" + `?in=${_in}&out=${_out}&type=${_type}`,
                 method: "get",
                 dataType: "json",
+                beforeSend: function() {
+                    availableRooms.html('<option>Ýüklenýär<option>');
+                }
                 success: function(res) {
 
                     console.log(res)
