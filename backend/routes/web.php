@@ -21,7 +21,7 @@ use App\Http\Controllers\StaffDepartmentController;
 |
 */
 
-
+/* some changes */
 Route::get('/', [PageController::class, 'index'])->name('homePage');
 Route::post('/check', [BookingController::class, 'check'])->name('checkBooking');
 Route::get('/rooms', [PageController::class, 'rooms'])->name('roomsPage');
