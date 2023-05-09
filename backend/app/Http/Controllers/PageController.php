@@ -9,7 +9,8 @@ class PageController extends Controller
 {
     public function index()
     {
-        return view('front.index');
+        $rts = RoomType::all();
+        return view('front.index', compact('rts'));
     }
 
     public function about()
@@ -23,7 +24,6 @@ class PageController extends Controller
     }
 
     public function admin() {
-        $rts = RoomType::all();
-        return view('admin.index', compact('rts'));
+        return view('admin.index');
     }
 }
