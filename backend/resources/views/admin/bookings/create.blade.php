@@ -13,6 +13,17 @@
             @if (Session::has('success'))
                 <p class="text-success">{{ session('success') }}</p>
             @endif
+
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <div class="form-group">
                 <label for="user_id">Müşderini saýla: </label>
                 <select class="form-control" name="user_id" id="user_id">
@@ -58,7 +69,27 @@
 @section('scripts')
   <script>
     $(document).ready(function() {
+
+        var controls = $('.form-control').toArray()
+        controls.forEach(function(item, index) {
+
+            item.addEventListener('blur', function(e) {
+                var next = e.target.nextElementSibling
+                if (next && next.nodeName === 'P') {
+                    next.remove()
+                }
+                if (e.target.value === '') {
+                    e.target.insertAdjacentHTML('afterend', '<p class="text-danger">Doldurmaly</p>')
+                } else {
+
+                }
+            })
+        })
+
+        /* ajax booking checking */
         var roomList = $('select.room-list')
+
+
         $('#ajax-btn').on('click', function(e) {
 
             e.preventDefault();

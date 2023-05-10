@@ -20,10 +20,22 @@ class BookingController extends Controller
     {
         $request->validate([
             'customer_id' => 'required',
-            'date_out' => 'required',
-            'date_in' => 'required',
+            'room_id' => 'required',
+            'checkin_date' => 'required',
+            'checkout_date' => 'required',
+            'total_adults' => 'required'
         ]);
-        Booking::create($request->all());
+
+        $booking = new Booking;
+        $booking->customer_id = $request->customer_id;
+        $booking->room_id = $request->room_id;
+        $booking->checkin_date = $request->checkin_date;
+        $booking->checkout_date = $request->checkout_date;
+        $booking->total_adults = $request->total_adults;
+        $booking->total_children = $request->total_children;
+        $booking->save();
+
+        return redirect()->route('bookings.create')->withSuccess('Bron üstünlikli goşuldy');
     }
 
 
