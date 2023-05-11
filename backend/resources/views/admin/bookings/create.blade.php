@@ -32,17 +32,20 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group">
-                <label for="checkin_date">Başlanýan senesi</label>
-                <input type="date" name="checkin_date" id="checkin_date" class="form-control checkindate" />
-            </div>
-            <div class="form-group">
-                <label for="checkout_date"> Tamamlanýan senesi</label>
-                <input type="date" name="checkout_date" id="checkout_date" class="form-control checkoutdate" />
+            <div class="d-flex">
+                <div class="form-group">
+                    <label for="checkin_date">Başlanýan senesi</label>
+                    <input type="date" name="checkin_date" id="checkin_date" class="form-control checkindate" lang="tk-TM" />
+                </div>
+                <div class="form-group">
+                    <label for="checkout_date"> Tamamlanýan senesi</label>
+                    <input type="date" name="checkout_date" id="checkout_date" class="form-control checkoutdate" lang="tk-TM" />
+                </div>
             </div>
             <div>
                 <button id="ajax-btn" class="btn btn-info">Barla!</button>
             </div>
+            <p style="display: none" class="text-danger">Ýalňyşlyk ýüze çykdy täzeden synanyşyň</p>
             <div class="form-group">
                 <label>Elýeterli otaglar</label>
                 <select name="room_id" class="form-control room-list">
@@ -91,10 +94,11 @@
 
 
         $('#ajax-btn').on('click', function(e) {
-
+            var _ajaxBtn = $(this);
             e.preventDefault();
             var __checkin = $('#checkin_date').val();
             var __checkout = $('#checkout_date').val();
+            _ajaxBtn.next().css('display', 'hidden');
             if (__checkin !== '' && __checkout !== '') {
                 $.ajax({
                 url: "{{ url('adminka/bookings/check/available-rooms') }}" + `?in=${__checkin}&out=${__checkout}&type=all`,
@@ -104,6 +108,7 @@
                     roomList.html('<option>Ýüklenýär ...</option>')
                 },
                 success: function(res) {
+                    _ajaxBtn.next().css('display', 'none');
                     console.log(res)
                     roomList.empty();
                     var data = '';
@@ -111,6 +116,10 @@
                         data += `<option value="${element.id}">${element.title}</option>`
                     });
                     roomList.append(data)
+                },
+                error: function() {
+                    _ajaxBtn.next().css('display', 'block');
+                    roomList.html('<option>Näsazlyk, täzeden synanyşyň</option>')
                 }
             });
             }
