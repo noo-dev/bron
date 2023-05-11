@@ -113,7 +113,7 @@
                     roomList.empty();
                     var data = '';
                     res.forEach(element => {
-                        data += `<option value="${element.id}">${element.title}</option>`
+                        data += `<option value="${element.id}"><strong>${element.roomtype} - </strong>${element.title}</option>`
                     });
                     roomList.append(data)
                 },

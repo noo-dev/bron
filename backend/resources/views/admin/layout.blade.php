@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css"> --}}
   <!-- summernote -->
   {{-- <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css"> --}}
-
+    @yield('styles')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
@@ -166,14 +166,53 @@
                 </p>
                 </a>
             </li>
+             <!-- Otag görnüşleri -->
+            <li class="nav-item">
+                <a href="{{ route('room-types.index') }}" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                    Otag görnüşleri
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+                </a>
+                <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('room-types.index') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Hemmesi</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('room-types.create') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Täze goşmak</p>
+                    </a>
+                </li>
+                </ul>
+            </li>
             <!-- Otaglar -->
             <li class="nav-item">
                 <a href="{{ route('rooms.index') }}" class="nav-link">
-                <i class="nav-icon fas fa-th"></i>
+                <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                     Otaglar
+                    <i class="right fas fa-angle-left"></i>
                 </p>
                 </a>
+                <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('rooms.index') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Hemmesi</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('rooms.create') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Täze goşmak</p>
+                    </a>
+                </li>
+                </ul>
             </li>
             <!-- Bolumler -->
             <li class="nav-item">

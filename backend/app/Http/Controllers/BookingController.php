@@ -19,7 +19,7 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'customer_id' => 'required',
+            'user_id' => 'required',
             'room_id' => 'required',
             'checkin_date' => 'required',
             'checkout_date' => 'required',
@@ -27,7 +27,7 @@ class BookingController extends Controller
         ]);
 
         $booking = new Booking;
-        $booking->customer_id = $request->customer_id;
+        $booking->user_id = $request->user_id;
         $booking->room_id = $request->room_id;
         $booking->checkin_date = $request->checkin_date;
         $booking->checkout_date = $request->checkout_date;
