@@ -19,6 +19,11 @@ class PageController extends Controller
 
     }
 
+    public function login()
+    {
+        return view('front.login');
+    }
+
     public function contact()
     {
 
@@ -27,7 +32,7 @@ class PageController extends Controller
     public function admin() {
         $bookings = Booking::selectRaw('count(id) as total_bookings, checkin_date')
             ->groupBy('checkin_date')->get();
-        
+
         $labels = [];
         $data = [];
 
