@@ -54,13 +54,17 @@ class CustomerController extends Controller
         $c->mobile = $request->mobile;
         $c->address = $request->address;
 
-        if ($request->has('photo')) {
+        if ($request->hasFile('photo')) {
             $c->photo = $request->photo->store('customer_images');
         } else {
             $c->photo = 'customer_images/nophoto.jpg';
         }
 
         $c->save();
+
+        if ($request->ref === 'front') {
+            return redirect()->route('homePage')->with('success', 'Siz üstünlikli registrasiýa bolduňyz');
+        }
 
         return redirect()->back()->with('success', 'Musderi ustunlikli registrasiya boldy');
     }
@@ -111,11 +115,6 @@ class CustomerController extends Controller
         $c->mobile = $request->mobile;
         $c->address = $request->address;
 
-        if ($request->has('photo')) {
-            $c->photo = $request->photo->store('customer_images');
-        } else {
-            $c->photo = 'customer_images/nophoto.jpg';
-        }
 
         if ( $request->hasFile('photo') ) {
             $c->photo = $request->photo->store('customer_images');
@@ -124,6 +123,8 @@ class CustomerController extends Controller
         }
 
         $c->save();
+
+        
 
         return redirect()->back()->with('success', 'Müşderi maglumatlary üýtgedildi');
     }
@@ -139,5 +140,15 @@ class CustomerController extends Controller
         Customer::destroy($id);
 
         return redirect()->back()->withSuccess('Otag ocurildi');
+    }
+
+    public function login()
+    {
+        return view('front.login');
+    }
+
+    public function register()
+    {
+        return view('front.register');
     }
 }

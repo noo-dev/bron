@@ -24,7 +24,8 @@ use App\Http\Controllers\StaffDepartmentController;
 /* =================== FRONT ROUTES ====================== */
 
 Route::get('/', [PageController::class, 'index'])->name('homePage');
-Route::get('/login', [PageController::class, 'login'])->name('login.form');
+Route::get('/login', [CustomerController::class, 'login'])->name('login.form');
+Route::get('/register', [CustomerController::class, 'register'])->name('register.form');
 Route::post('/check', [BookingController::class, 'check'])->name('checkBooking');
 Route::get('/rooms', [PageController::class, 'rooms'])->name('roomsPage');
 

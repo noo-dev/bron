@@ -72,6 +72,8 @@
                 </li> --}}
                 <li><a href="./blog.html">Täzelikler</a></li>
                 <li><a href="./contact.html">Habarlaşmak</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Registrasiya</a></li>
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -152,6 +154,8 @@
                                     </li> --}}
                                     <li><a href="./blog.html">Täzelikler</a></li>
                                     <li><a href="./contact.html">Habarlaşmak</a></li>
+                                    <li><a href="/login">Login</a></li>
+                                    <li><a href="/register">Registrasiya</a></li>
                                 </ul>
                             </nav>
                             <div class="nav-right search-switch">
@@ -164,6 +168,10 @@
         </div>
     </header>
     <!-- Header End -->
+
+    @if (Session::has('success'))
+        <div class="alert alert-success">{{ Session::get('success') }}</div>
+    @endif
 
     @yield('content')
 
