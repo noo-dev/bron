@@ -1,0 +1,25 @@
+{
+    "files.exclude": {
+        ".vscode": true,
+        "//.gitignore": true,
+        "backend/.editorconfig": true,
+        "backend/.env.example": true,
+        "backend/.gitattributes": true,
+        "backend/**md": true,
+        "backend/**yml": true,
+        "backend/app/Console": true,
+        "backend/app/Exceptions": true,
+        "backend/app/Providers": true,
+        "backend/artisan": true,
+        "backend/bootstrap": true,
+        "backend/bron.sql": true,
+        "backend/composer.lock": true,
+        "backend/package.json": true,
+        "backend/phpunit.xml": true,
+        "backend/resources/css": true,
+        "backend/resources/js": true,
+        "backend/server.php": true,
+        "backend/tests": true,
+        "backend/webpack.mix.js": true
+    }
+}

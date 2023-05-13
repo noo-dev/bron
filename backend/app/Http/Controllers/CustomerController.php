@@ -147,6 +147,11 @@ class CustomerController extends Controller
         return view('front.login');
     }
 
+    public function loginPost()
+    {
+        
+    }
+
     public function register()
     {
         return view('front.register');

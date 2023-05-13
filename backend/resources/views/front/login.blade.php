@@ -4,8 +4,8 @@
 <div class="container my-5 ">
     <div class="row">
         <div class="offset-md-3 col-md-6">
-            <form action="#" class="contact-form">
-
+            <form action="{{ route('login.form') }}" method="POST" class="contact-form">
+                @csrf
                 <div class="">
                     <input type="text" placeholder="Adyňyz we familiýaňyz" name="full_name">
                 </div>
