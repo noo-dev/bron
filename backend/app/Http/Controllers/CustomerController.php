@@ -147,9 +147,30 @@ class CustomerController extends Controller
         return view('front.login');
     }
 
-    public function loginPost()
+    public function loginPost(Request $request)
     {
-        
+        $email = $request->email;
+        $password = sha1($request->password);
+        $detail = Customer::where([
+            ['email', '=', $email], 
+            ['password', '=', $password]
+        ])->count();    
+        if ($detail > 0) {
+            $customer = Customer::where([
+                ['email', '=', $email], 
+                ['password', '=', $password]
+            ])->get();
+            session(['customerLogin' => true, 'data' => $customer]);
+            return redirect()->route('homePage');
+        }
+        return redirect()->back()->with('error', 'Nädogry email ýa-da parol!');
+    }
+
+    public function logout()
+    {
+        session()->forget('customerLogin');
+        session()->forget('data');
+        return redirect()->route('login.form');
     }
 
     public function register()

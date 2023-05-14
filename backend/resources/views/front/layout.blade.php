@@ -154,8 +154,13 @@
                                     </li> --}}
                                     <li><a href="./blog.html">Täzelikler</a></li>
                                     <li><a href="./contact.html">Habarlaşmak</a></li>
+                                    @if (session('customerLogin'))
+                                        <li><a href="/login">{{ session('data')[0]['full_name'] }}</a></li>
+                                        <li><a href="/logout">Çykmak</a></li>
+                                    @else
                                     <li><a href="/login">Login</a></li>
                                     <li><a href="/register">Registrasiya</a></li>
+                                    @endif
                                 </ul>
                             </nav>
                             <div class="nav-right search-switch">
