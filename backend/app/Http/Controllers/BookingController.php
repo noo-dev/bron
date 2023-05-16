@@ -18,6 +18,7 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->all());
         $request->validate([
             'user_id' => 'required',
             'room_id' => 'required',
@@ -29,15 +30,17 @@ class BookingController extends Controller
         $booking = new Booking;
         $booking->user_id = $request->user_id;
         $booking->room_id = $request->room_id;
-        $booking->checkin_date = $request->checkin_date;
-        $booking->checkout_date = $request->checkout_date;
+        $booking->checkin_date = date('Y-m-d', strtotime($request->checkin_date));
+        $booking->checkout_date = date('Y-m-d', strtotime($request->checkout_date));
         $booking->total_adults = $request->total_adults;
         $booking->total_children = $request->total_children;
         $booking->save();
-
+        if ($request->ref === 'front') {
+            return redirect()->route('homePage')->withSuccess('Siziň bronyňyz kabul edildi!');
+        }
         return redirect()->route('bookings.create')->withSuccess('Bron üstünlikli goşuldy');
     }
-
+    
 
     // Check available rooms
     public function check_available_rooms(Request $request)

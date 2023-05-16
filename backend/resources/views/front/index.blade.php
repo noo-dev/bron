@@ -4,6 +4,16 @@
 
     <!-- Hero Section Begin -->
     <section class="hero-section">
+        @if ($errors->any())
+            <div class="alert alert-danger" style="z-index: 100">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
@@ -16,21 +26,21 @@
                 <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                     <div class="booking-form">
                         <h3>Bron</h3>
-                        <form action="#">
-
+                        <form action="{{ route('bookings.store') }}" method="post">
+                            @csrf
                             <div class="check-date">
                                 <label for="date-in">Başlaýan wagty:</label>
-                                <input type="text" class="date-input" id="date-in" name="date_in">
+                                <input type="text" class="date-input" id="date-in" name="checkin_date">
                                 <i class="icon_calendar"></i>
                             </div>
                             <div class="check-date">
                                 <label for="date-out">Gutarýan wagty:</label>
-                                <input type="text" class="date-input" id="date-out" name="date_out">
+                                <input type="text" class="date-input" id="date-out" name="checkout_date">
                                 <i class="icon_calendar"></i>
                             </div>
                             <div class="select-option">
                                 <label for="adults">Uly adam sany:</label>
-                                <select id="adults" name="adults">
+                                <select id="adults" name="total_adults">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -38,8 +48,9 @@
                                 </select>
                             </div>
                             <div class="select-option">
-                                <label for="adults">Çaga sany:</label>
-                                <select id="adults" name="adults">
+                                <label for="children">Çaga sany:</label>
+                                <select id="children" name="total_children">
+                                    <option data-display="-"></option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -58,14 +69,14 @@
                             <div class="select-option">
                                 <label for="available-rooms">Elýeterli otaglar:</label>
                                 <select id="available-rooms" name="room_id">
-
                                 </select>
-
-
                             </div>
-                            <input type="hidden" name="user_id" value="test">
-                            <button class="check-btn" type="button">Barla</button>
-                            <button type="submit" style="display: none">test</button>
+                            <input type="hidden" name="user_id" value="{{ session('data') ? session('data')[0]['id'] : '' }}">
+                            <input type="hidden" name="ref" value="front">
+                            <div class="d-flex">
+                                <button class="check-btn" type="button">Barla</button>
+                                <button type="submit">Bronla</button>
+                            </div>
                         </form>
                     </div>
                 </div>
