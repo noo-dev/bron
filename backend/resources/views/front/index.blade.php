@@ -72,6 +72,7 @@
                                 </select>
                             </div>
                             <input type="hidden" name="user_id" value="{{ session('data') ? session('data')[0]['id'] : '' }}">
+                            <input type="hidden" name="room_price" id="room_price" value="">
                             <input type="hidden" name="ref" value="front">
                             <div class="d-flex">
                                 <button class="check-btn" type="button">Barla</button>
@@ -119,7 +120,7 @@
                     console.log(res)
                     var str = '<option data-display="Otag saýlaň">Otaglar</option>';
                     res.forEach(function(item) {
-                        str += `<option value="${item.id}"><strong>${item.roomtype} - </strong>${item.title}</option>`;
+                        str += `<option data-price="${item.room_price}" value="${item.id}"><strong>${item.roomtype} - </strong>${item.title}</option>`;
                     });
                     availableRooms.append(str).niceSelect('update');
                     _btn.text('Barla').prop('disabled', false)
@@ -129,6 +130,8 @@
                 }
             });
         });
+
+        $(document).on('change')
 
         });
     </script>

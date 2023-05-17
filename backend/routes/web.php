@@ -31,6 +31,10 @@ Route::get('/register', [CustomerController::class, 'register'])->name('register
 Route::post('/check', [BookingController::class, 'check'])->name('checkBooking');
 Route::get('/rooms', [PageController::class, 'rooms'])->name('roomsPage');
 
+// booking routes
+Route::get('booking/success', [BookingController::class, 'bookingPaymentSuccess']);
+Route::get('booking/fail', [BookingController::class, 'bookingPaymentFail']);
+
 /* ============= ADMIN ROUTES ================= */
 
 Route::group(['prefix' => 'adminka'], function() {
