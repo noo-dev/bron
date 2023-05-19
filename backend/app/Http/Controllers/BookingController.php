@@ -6,9 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Booking;
 use App\Models\Customer;
+use PDF;
 
 class BookingController extends Controller
 {
+    public function index()
+    {
+        $bookings = Booking::all();
+        return view('admin.bookings.index', compact('bookings'));
+    }
+
     public function create()
     {
 
@@ -18,23 +25,33 @@ class BookingController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         $request->validate([
             'user_id' => 'required',
             'room_id' => 'required',
             'checkin_date' => 'required',
             'checkout_date' => 'required',
-            'total_adults' => 'required'
+            'total_adults' => 'required',
+            'room_price' => 'required'
         ]);
+
+        $checkin_date_tmstmp = strtotime($request->checkin_date);
+        $checkout_date_tmstmp = strtotime($request->checkout_date);
+        $difference = $checkout_date_tmstmp - $checkin_date_tmstmp;
+        $days = abs($difference/(60*60)/24) + 1;
+        $room_price = $request->room_price;
+        $total_payment = $days * ($room_price);
+        // dd($checkin_date_tmstmp, $checkout_date_tmstmp, $difference, $days, $room_price);
+        // $pdf = PDF::loadView('ticket', ['days' => $days]);
+        // return $pdf->download(date('Ymd.') . '.pdf');
 
         $booking = new Booking;
         $booking->user_id = $request->user_id;
         $booking->room_id = $request->room_id;
-        $booking->checkin_date = date('Y-m-d', strtotime($request->checkin_date));
-        $booking->checkout_date = date('Y-m-d', strtotime($request->checkout_date));
+        $booking->checkin_date = date('Y-m-d', $checkin_date_tmstmp);
+        $booking->checkout_date = date('Y-m-d', $checkout_date_tmstmp);
         $booking->total_adults = $request->total_adults;
         $booking->total_children = $request->total_children;
-        $booking->save();
+        // $booking->save();
         if ($request->ref === 'front') {
             \Stripe\Stripe::setApiKey('sk_test_51N8bmFGaRPXi8hiMwrbNLhk4OkOPVvNEjuAVzar7x0vOXQ0nJ3lu6UYP3zJRWEqcjVpea3jBtgNbkeK9ClkgaryJ004xg1YBGk');
             $session = \Stripe\Checkout\Session::create([
@@ -45,7 +62,7 @@ class BookingController extends Controller
                         'product_data' => [
                             'name' => 'T-shirt'
                         ],
-                        'unit_amount' => 2000,
+                        'unit_amount' => $total_payment * 100,
                     ],
                     'quantity' => 1
                 ]],

@@ -70,6 +70,7 @@
                                 <label for="available-rooms">Elýeterli otaglar:</label>
                                 <select id="available-rooms" name="room_id">
                                 </select>
+                                <p class="room-price-p" style="display: none">Price: <span class="show-room-price"></span></p>
                             </div>
                             <input type="hidden" name="user_id" value="{{ session('data') ? session('data')[0]['id'] : '' }}">
                             <input type="hidden" name="room_price" id="room_price" value="">
@@ -131,7 +132,12 @@
             });
         });
 
-        $(document).on('change')
+        $(document).on('change', '#available-rooms', function() {
+            var _selectedPrice = $(this).find('option:selected').attr('data-price');
+            $('.room-price-p').css('display', 'block');
+            $('#room_price').val(_selectedPrice);
+            $('.show-room-price').text(_selectedPrice);
+        });
 
         });
     </script>

@@ -5,8 +5,8 @@
         <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Otaglar</h3>
-                <a href="{{ route('rooms.create') }}" class="float-right btn btn-success">Täze Otag goşmak</a>
+                <h3 class="card-title">Bronlar</h3>
+                <a href="{{ route('rooms.create') }}" class="float-right btn btn-success">Täze Bron goşmak</a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -15,23 +15,29 @@
                         <thead>
                             <tr>
                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">#</th>
-                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Ady</th>
-                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Görnüşi</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Müşderi</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Otag nomeri</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Otag görnüşi</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Başlanýan senesi</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Gutarýan senesi senesi</th>
                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"></th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            @if ($data)
-                                @foreach($data as $room)
+                            @if ($bookings)
+                                @foreach($bookings as $booking)
                                     <tr>
-                                        <td>{{ $room->id }}</td>
-                                        <td>{{ $room->title }}</td>
-                                        <td>{{ $room->roomType->title }}</td>
+                                        <td>{{ $booking->id }}</td>
+                                        <td>{{ $booking->customer->full_name }}</td>
+                                        <td>{{ $booking->room->title }}</td>
+                                        <td>{{ $booking->room->roomtype->title }}</td>
+                                        <td>{{ $booking->checkin_date }}</td>
+                                        <td>{{ $booking->checkout_date }}</td>
                                         <td class="d-flex">
-                                            <a href="{{ route('rooms.show', $room->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
-                                            <a class="btn btn-sm btn-info" href="{{ route('rooms.edit', $room->id) }}"><i class="fa fa-edit"></i></a>
-                                            <form method="POST" action="{{ route('rooms.destroy', $room->id) }}">
+                                            <a href="{{ route('bookings.show', $booking->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
+                                            <a class="btn btn-sm btn-info" href="{{ route('bookings.edit', $booking->id) }}"><i class="fa fa-edit"></i></a>
+                                            <form method="POST" action="{{ route('bookings.destroy', $booking->id) }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
