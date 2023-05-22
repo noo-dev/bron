@@ -30,6 +30,7 @@ Route::get('/logout', [CustomerController::class, 'logout'])->name('logout');
 Route::get('/register', [CustomerController::class, 'register'])->name('register.form');
 Route::post('/check', [BookingController::class, 'check'])->name('checkBooking');
 Route::get('/rooms', [PageController::class, 'rooms'])->name('roomsPage');
+Route::get('/dashboard', [PageController::class, 'dashboard'])->name('front.dashboard');
 
 // booking routes
 Route::get('booking/success', [BookingController::class, 'bookingPaymentSuccess']);

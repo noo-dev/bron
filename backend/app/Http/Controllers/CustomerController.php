@@ -159,8 +159,8 @@ class CustomerController extends Controller
             $customer = Customer::where([
                 ['email', '=', $email], 
                 ['password', '=', $password]
-            ])->get();
-            session(['customerLogin' => true, 'data' => $customer]);
+            ])->first();
+            session(['customerLogin' => true, 'user' => $customer]);
             return redirect()->route('homePage');
         }
         return redirect()->back()->with('error', 'Nädogry email ýa-da parol!');

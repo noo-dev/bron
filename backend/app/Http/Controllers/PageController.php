@@ -43,4 +43,8 @@ class PageController extends Controller
 
         return view('admin.index', compact('labels', 'data'));
     }
+
+    public function dashboard() {
+        return view('front.dashboard');
+    }
 }

@@ -72,7 +72,7 @@
                                 </select>
                                 <p class="room-price-p" style="display: none">Price: <span class="show-room-price"></span></p>
                             </div>
-                            <input type="hidden" name="user_id" value="{{ session('data') ? session('data')[0]['id'] : '' }}">
+                            <input type="hidden" name="user_id" value="{{ session('user') ? session('user')['id'] : '' }}">
                             <input type="hidden" name="room_price" id="room_price" value="">
                             <input type="hidden" name="ref" value="front">
                             <div class="d-flex">

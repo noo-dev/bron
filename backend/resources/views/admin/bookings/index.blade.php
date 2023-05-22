@@ -6,6 +6,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Bronlar</h3>
+                @include('admin.inc.alert')
                 <a href="{{ route('rooms.create') }}" class="float-right btn btn-success">Täze Bron goşmak</a>
               </div>
               <!-- /.card-header -->
@@ -19,7 +20,8 @@
                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Otag nomeri</th>
                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Otag görnüşi</th>
                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Başlanýan senesi</th>
-                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Gutarýan senesi senesi</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Gutarýan senesi</th>
+                                <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1">Bronlanan ýeri</th>
                                 <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1"></th>
                             </tr>
                         </thead>
@@ -34,13 +36,17 @@
                                         <td>{{ $booking->room->roomtype->title }}</td>
                                         <td>{{ $booking->checkin_date }}</td>
                                         <td>{{ $booking->checkout_date }}</td>
+                                        <td>{{ $booking->ref }}</td>
                                         <td class="d-flex">
                                             <a href="{{ route('bookings.show', $booking->id) }}" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
                                             <a class="btn btn-sm btn-info" href="{{ route('bookings.edit', $booking->id) }}"><i class="fa fa-edit"></i></a>
                                             <form method="POST" action="{{ route('bookings.destroy', $booking->id) }}">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                                                <button 
+                                                    class="btn btn-sm btn-danger" 
+                                                    onclick="return confirm('Siz hakykatdanam brony öçürmekçimi?')"
+                                                ><i class="fa fa-trash"></i></button>
                                             </form>
                                         </td>
                                     </tr>
@@ -53,9 +59,14 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th rowspan="1" colspan="1">#</th>
-                                <th rowspan="1" colspan="1">Ady</th>
-                                <th rowspan="1" colspan="1"></th>
+                                <th>#</th>
+                                <th>Müşderi</th>
+                                <th>Otag nomeri</th>
+                                <th>Otag görnüşi</th>
+                                <th>Başlanýan senesi</th>
+                                <th>Gutarýan senesi</th>
+                                <th>Bronlanan ýeri</th>
+                                <th></th>
                             </tr>
                         </tfoot>
                         </table>

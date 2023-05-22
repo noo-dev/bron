@@ -70,7 +70,6 @@
                         <li><a href="#">Premium Room</a></li>
                     </ul>
                 </li> --}}
-                <li><a href="./blog.html">Täzelikler</a></li>
                 <li><a href="./contact.html">Habarlaşmak</a></li>
                 <li><a href="/login">Login</a></li>
                 <li><a href="/register">Registrasiya</a></li>
@@ -152,10 +151,10 @@
                                             <li><a href="#">Premium Room</a></li>
                                         </ul>
                                     </li> --}}
-                                    <li><a href="./blog.html">Täzelikler</a></li>
                                     <li><a href="./contact.html">Habarlaşmak</a></li>
                                     @if (session('customerLogin'))
-                                        <li><a href="/login">{{ session('data')[0]['full_name'] }}</a></li>
+                                        <li><a href="#">{{ session('user')['full_name'] }}</a></li>
+                                        <li><a href="{{ route('front.dashboard') }}">Şahsy otag</a></li>
                                         <li><a href="/logout">Çykmak</a></li>
                                     @else
                                     <li><a href="/login">Login</a></li>

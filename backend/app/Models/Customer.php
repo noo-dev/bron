@@ -13,7 +13,7 @@ class Customer extends Model
     // relationships
     public function bookings()
     {
-        return $this->hasMany(Booking::class);
+        return $this->hasMany(Booking::class, 'user_id');
     }
 
 }

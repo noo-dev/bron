@@ -53,6 +53,7 @@ class BookingController extends Controller
         $booking->total_children = $request->total_children;
         // $booking->save();
         if ($request->ref === 'front') {
+            $booking->ref = 'front';
             \Stripe\Stripe::setApiKey('sk_test_51N8bmFGaRPXi8hiMwrbNLhk4OkOPVvNEjuAVzar7x0vOXQ0nJ3lu6UYP3zJRWEqcjVpea3jBtgNbkeK9ClkgaryJ004xg1YBGk');
             $session = \Stripe\Checkout\Session::create([
                 'payment_method_types' => ['card'],
@@ -60,7 +61,7 @@ class BookingController extends Controller
                     'price_data' => [
                         'currency' => 'usd',
                         'product_data' => [
-                            'name' => 'T-shirt'
+                            'name' => 'Otag brony'
                         ],
                         'unit_amount' => $total_payment * 100,
                     ],
@@ -70,6 +71,7 @@ class BookingController extends Controller
                 'success_url' => 'http://localhost:8000/booking/success?session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => 'http://localhost:8000/booking/fail'
             ]);
+            dd($session);
 
             return redirect($session->url);
         }
@@ -106,5 +108,11 @@ class BookingController extends Controller
     {
         dd($request);
         echo 'Fail';
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        Booking::destroy($id);  
+        return redirect()->back()->with('success', 'Bron öçürildi');
     }
 }
