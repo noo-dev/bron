@@ -34,7 +34,8 @@ Route::get('/dashboard', [PageController::class, 'dashboard'])->name('front.dash
 
 // booking routes
 Route::get('booking/success', [BookingController::class, 'bookingPaymentSuccess']);
-Route::get('booking/fail', [BookingController::class, 'bookingPaymentFail']);
+Route::get('booking/fail', [BookingController::class, 'bookingPaymentFail']); 
+Route::get('booking/download/{id}', [BookingController::class, 'getTicket'])->name('download.ticket'); 
 
 /* ============= ADMIN ROUTES ================= */
 

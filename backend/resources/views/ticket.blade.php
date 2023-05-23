@@ -12,6 +12,12 @@
 <body>
     <h1>Siziň bilediňiz</h1>
     
-    <p>Günlerr: {{ $days }}</p>
+    <p>Günler: {{ $booking->checkin_date }} - {{ $booking->checkout_date }}</p>
+    <p>Uly adamlar: {{ $booking->total_adults }}</p>
+    @if ($booking->total_children)
+        <p>Çagalar: {{ $booking->total_children }}</p>    
+    @endif
+    <p>Otag tipi: {{ $booking->room->roomtype->title }}</p>
+    <p>{{ $booking->room->roomtype->price }}</p>
 </body>
 </html>

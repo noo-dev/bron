@@ -40,20 +40,18 @@ class BookingController extends Controller
         $days = abs($difference/(60*60)/24) + 1;
         $room_price = $request->room_price;
         $total_payment = $days * ($room_price);
-        // dd($checkin_date_tmstmp, $checkout_date_tmstmp, $difference, $days, $room_price);
-        // $pdf = PDF::loadView('ticket', ['days' => $days]);
-        // return $pdf->download(date('Ymd.') . '.pdf');
+        
 
-        $booking = new Booking;
-        $booking->user_id = $request->user_id;
-        $booking->room_id = $request->room_id;
-        $booking->checkin_date = date('Y-m-d', $checkin_date_tmstmp);
-        $booking->checkout_date = date('Y-m-d', $checkout_date_tmstmp);
-        $booking->total_adults = $request->total_adults;
-        $booking->total_children = $request->total_children;
-        // $booking->save();
+        
         if ($request->ref === 'front') {
-            $booking->ref = 'front';
+            session()->put('form', [
+                'user_id' => $request->user_id,
+                'room_id' => $request->room_id,
+                'checkin_date' => date('Y-m-d', $checkin_date_tmstmp),
+                'checkout_date' => date('Y-m-d', $checkout_date_tmstmp),
+                'total_adults' => $request->total_adults,
+                'total_children' => $request->total_children
+            ]);
             \Stripe\Stripe::setApiKey('sk_test_51N8bmFGaRPXi8hiMwrbNLhk4OkOPVvNEjuAVzar7x0vOXQ0nJ3lu6UYP3zJRWEqcjVpea3jBtgNbkeK9ClkgaryJ004xg1YBGk');
             $session = \Stripe\Checkout\Session::create([
                 'payment_method_types' => ['card'],
@@ -71,9 +69,18 @@ class BookingController extends Controller
                 'success_url' => 'http://localhost:8000/booking/success?session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => 'http://localhost:8000/booking/fail'
             ]);
-            dd($session);
+            // dd($session);        
 
             return redirect($session->url);
+        } else {
+            $booking = new Booking;
+            $booking->user_id = $request->user_id;
+            $booking->room_id = $request->room_id;
+            $booking->checkin_date = date('Y-m-d', $checkin_date_tmstmp);
+            $booking->checkout_date = date('Y-m-d', $checkout_date_tmstmp);
+            $booking->total_adults = $request->total_adults;
+            $booking->total_children = $request->total_children;
+            $booking->save();
         }
         return redirect()->route('bookings.create')->withSuccess('Bron üstünlikli goşuldy');
 
@@ -100,19 +107,35 @@ class BookingController extends Controller
         \Stripe\Stripe::setApiKey('sk_test_51N8bmFGaRPXi8hiMwrbNLhk4OkOPVvNEjuAVzar7x0vOXQ0nJ3lu6UYP3zJRWEqcjVpea3jBtgNbkeK9ClkgaryJ004xg1YBGk');
         $session = \Stripe\Checkout\Session::retrieve($request->query('session_id'));
         if ($session->payment_status === 'paid') {
-            echo 'Success';
+            $form_data = session('form');
+            session()->forget('form');
+            $booking = Booking::create([
+                'user_id' => $form_data['user_id'],
+                'room_id' => $form_data['room_id'],
+                'checkin_date' => $form_data['checkin_date'],
+                'checkout_date' => $form_data['checkout_date'],
+                'total_adults' => $form_data['total_adults'],
+                'total_children' => $form_data['total_children'],
+                'ref' => 'front'
+            ]);
+            return view('front.booking-success', compact('booking'));
         }
     }
 
     public function bookingPaymentFail(Request $request)
     {
-        dd($request);
-        echo 'Fail';
+        return view('front.booking-failure');
     }
 
     public function destroy(Request $request, $id)
     {
         Booking::destroy($id);  
         return redirect()->back()->with('success', 'Bron öçürildi');
+    }
+
+    public function getTicket(Request $request, $id) {
+        $booking = Booking::find($id);
+        $pdf = PDF::loadView('ticket', compact('booking'));
+        return $pdf->download(date('Ymd.') . '.pdf');
     }
 }

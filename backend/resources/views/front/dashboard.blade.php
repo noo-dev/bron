@@ -15,7 +15,7 @@
                         @foreach ($user->bookings as $booking)
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <p><strong>Senesi: </strong>{{ $booking->checkin_date }} - {{ $booking->checkout_date }}</p>
-                                <button class="btn btn-info">Ýükle <i class="fa fa-download"></i></button>
+                                <a href="{{ route('download.ticket', ['id' => $booking->id]) }}" target="_blank" class="btn btn-info">Ýükle <i class="fa fa-download"></i></a>
                             </li>
                         @endforeach
                     </div>
