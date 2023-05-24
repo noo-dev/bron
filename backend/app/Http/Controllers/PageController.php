@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\RoomType;
 use App\Models\Booking;
+use Illuminate\Support\Facades\Http;
 
 class PageController extends Controller
 {
@@ -46,5 +47,9 @@ class PageController extends Controller
 
     public function dashboard() {
         return view('front.dashboard');
+    }
+
+    public function test() {
+        Http::get('http://localhost:1337/test');
     }
 }

@@ -21,6 +21,8 @@ use App\Http\Controllers\StaffDepartmentController;
 |
 */
 
+Route::get('/test', [PageController::class, 'test']);
+
 /* =================== FRONT ROUTES ====================== */
 
 Route::get('/', [PageController::class, 'index'])->name('homePage');
