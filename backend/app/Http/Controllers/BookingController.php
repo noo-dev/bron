@@ -31,7 +31,6 @@ class BookingController extends Controller
             'checkin_date' => 'required',
             'checkout_date' => 'required',
             'total_adults' => 'required',
-            'room_price' => 'required'
         ]);
 
         $checkin_date_tmstmp = strtotime($request->checkin_date);
@@ -102,6 +101,21 @@ class BookingController extends Controller
         return response()->json($rooms);
     }
 
+    public function check_by_date(Request $request)
+    {
+        $date = date('Y-m-d', strtotime($request->date));
+        // dd($date);
+        $bookedRooms = DB::SELECT("SELECT room_id FROM bookings WHERE '$date' BETWEEN checkin_date AND checkout_date");
+        $adatyRooms = DB::SELECT("SELECT id, title from ROOMS WHERE room_type_id = 7");
+        $premiumRooms = DB::SELECT("SELECT id, title from ROOMS WHERE room_type_id = 8");
+        $luxRooms = DB::SELECT("SELECT id, title from ROOMS WHERE room_type_id = 9");
+        $arr = [];
+        foreach($bookedRooms as $br) {
+            $arr[] = $br->room_id;
+        }
+        return view('admin.bookings.visual-result', compact('arr', 'adatyRooms'));
+    }
+
     public function bookingPaymentSuccess(Request $request)
     {
         \Stripe\Stripe::setApiKey('sk_test_51N8bmFGaRPXi8hiMwrbNLhk4OkOPVvNEjuAVzar7x0vOXQ0nJ3lu6UYP3zJRWEqcjVpea3jBtgNbkeK9ClkgaryJ004xg1YBGk');
@@ -137,5 +151,10 @@ class BookingController extends Controller
         $booking = Booking::find($id);
         $pdf = PDF::loadView('ticket', compact('booking'));
         return $pdf->download(date('Ymd.') . '.pdf');
+    }
+
+    public function getVisual()
+    {
+        return view('admin.bookings.visual');
     }
 }

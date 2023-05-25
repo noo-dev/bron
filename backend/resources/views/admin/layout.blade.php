@@ -284,6 +284,12 @@
                     <p>Täze goşmak</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('bookings.visual') }}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Wizual</p>
+                    </a>
+                </li>
                 </ul>
             </li>
             <hr>

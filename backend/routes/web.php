@@ -63,8 +63,12 @@ Route::group(['prefix' => 'adminka'], function() {
 
     // delete roomtype image (ajax request)
     Route::get('/roomtypeimage/delete/{id}', [RoomTypeController::class, 'delete_image'])->name('delete.rti');
+
+    // show booked rooms visually 
+    Route::get('/bookings/visual', [BookingController::class, 'getVisual'])->name('bookings.visual');
 });
 
 // Booking routes
 Route::resource('adminka/bookings', BookingController::class);
 Route::get('adminka/bookings/check/available-rooms', [BookingController::class, 'check_available_rooms']);
+Route::get('adminka/bookings/check/check-date', [BookingController::class, 'check_by_date'])->name('checkByDate');
