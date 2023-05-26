@@ -42,15 +42,7 @@ class BookingController extends Controller
         
 
         
-        if ($request->ref === 'front') {
-            session()->put('form', [
-                'user_id' => $request->user_id,
-                'room_id' => $request->room_id,
-                'checkin_date' => date('Y-m-d', $checkin_date_tmstmp),
-                'checkout_date' => date('Y-m-d', $checkout_date_tmstmp),
-                'total_adults' => $request->total_adults,
-                'total_children' => $request->total_children
-            ]);
+        if ($request->ref === 'front') {       
             \Stripe\Stripe::setApiKey('sk_test_51N8bmFGaRPXi8hiMwrbNLhk4OkOPVvNEjuAVzar7x0vOXQ0nJ3lu6UYP3zJRWEqcjVpea3jBtgNbkeK9ClkgaryJ004xg1YBGk');
             $session = \Stripe\Checkout\Session::create([
                 'payment_method_types' => ['card'],
@@ -62,10 +54,10 @@ class BookingController extends Controller
                         ],
                         'unit_amount' => $total_payment * 100,
                     ],
-                    'quantity' => 1
+                    'quantity' => 1,
                 ]],
                 'mode' => 'payment',
-                'success_url' => 'http://localhost:8000/booking/success?session_id={CHECKOUT_SESSION_ID}',
+                'success_url' => "http://localhost:8000/booking/success?session_id={CHECKOUT_SESSION_ID}&uid={$request->user_id}&rid={$request->room_id}&cid={$request->checkin_date}&cod={$request->checkout_date}&ta={$request->total_adults}&tc={$request->total_children}",
                 'cancel_url' => 'http://localhost:8000/booking/fail'
             ]);
             // dd($session);        
@@ -82,8 +74,6 @@ class BookingController extends Controller
             $booking->save();
         }
         return redirect()->route('bookings.create')->withSuccess('Bron üstünlikli goşuldy');
-
-        
     }
     
 
@@ -121,15 +111,13 @@ class BookingController extends Controller
         \Stripe\Stripe::setApiKey('sk_test_51N8bmFGaRPXi8hiMwrbNLhk4OkOPVvNEjuAVzar7x0vOXQ0nJ3lu6UYP3zJRWEqcjVpea3jBtgNbkeK9ClkgaryJ004xg1YBGk');
         $session = \Stripe\Checkout\Session::retrieve($request->query('session_id'));
         if ($session->payment_status === 'paid') {
-            $form_data = session('form');
-            session()->forget('form');
             $booking = Booking::create([
-                'user_id' => $form_data['user_id'],
-                'room_id' => $form_data['room_id'],
-                'checkin_date' => $form_data['checkin_date'],
-                'checkout_date' => $form_data['checkout_date'],
-                'total_adults' => $form_data['total_adults'],
-                'total_children' => $form_data['total_children'],
+                'user_id' => $request->query('uid'),
+                'room_id' => $request->query('rid'),
+                'checkin_date' => $request->query('cid'),
+                'checkout_date' => $request->query('cod'),
+                'total_adults' => $request->query('ta'),
+                'total_children' => $request->query('tc'),
                 'ref' => 'front'
             ]);
             return view('front.booking-success', compact('booking'));
