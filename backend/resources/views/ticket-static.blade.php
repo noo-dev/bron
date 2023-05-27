@@ -1,7 +1,3 @@
-@php
-    \Carbon\Carbon::setLocale('tk');
-    setlocale(LC_TIME,'tk_TM');
-@endphp
 <!DOCTYPE html>
 <html>
 <head>
@@ -110,7 +106,10 @@
     </style>
 </head>
 <body>
+
         <h1>Siziň onlaýn bilediňiz</h1>
+    
+
         <!-- Booking details -->
         <table cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
             <!-- Table Header -->
@@ -129,8 +128,8 @@
             <tbody>
 
                 <tr>
-                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $booking->checkin_date)->format('j F Y') }}</td>
-                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $booking->checkout_date)->format('j F Y') }}</td>
+                    <td>13 Maý, 2023</td>
+                    <td>26 Maý, 2023</td>
                     <td>Lýuks</td>
                     <td>2</td>
                     <td>-</td>
@@ -162,11 +161,11 @@
 
                 <tr>
                     <td>Famiiýasy, ady</td>
-                    <td>{{ $booking->customer->full_name }}</td>
+                    <td>John Doe</td>
                 </tr><!-- Table Row -->
                 <tr>
                     <td>Telefon belgisi</td>
-                    <td>{{ $booking->customer->mobile }}</td>
+                    <td>+993 6X XXXXXX</td>
                 </tr><!-- Table Row -->
                 <tr>
                     <td>Pasport belgisi</td>
@@ -218,9 +217,12 @@
 
         <br>
 
+
         <h4>Dykgatyňyza ýetirýäris</h4>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi incidunt saepe quaerat nisi facilis magnam, esse harum commodi voluptatibus itaque,
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, distinctio.
         </p>
+
+    
 </body>
 </html>

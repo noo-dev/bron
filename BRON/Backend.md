@@ -1,0 +1,5 @@
+- [ ] SSE notification about new booking
+	- [ ] create nodejs sse
+	- [ ] call Laravel Http post to nodejs with booking details
+	- [ ] make on admin frontend sweetalert
+- [ ] add price to booking table

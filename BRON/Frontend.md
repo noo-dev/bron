@@ -1,0 +1,11 @@
+- [ ] Ticket pdf
+	- [ ] test with route the view of pdf
+	- [ ] make layout with static data
+	- [ ] paste dynamic data
+- [ ] %% Ticket details
+	- [ ] make dropdown for tickets
+	- [ ] layout with static data
+	- [ ] paste dynamic values %%
+- [ ]
+
+-

@@ -49,7 +49,11 @@ class PageController extends Controller
         return view('front.dashboard');
     }
 
-    public function test() {
-        Http::get('http://localhost:1337/test');
+    public function testPdf() {
+        // return view('ticket-static');
+        $pdf = \PDF::loadView('ticket-static');
+        return $pdf->download(date('Ymd.') . '.pdf');
     }
+
+
 }

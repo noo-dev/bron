@@ -21,7 +21,8 @@ use App\Http\Controllers\StaffDepartmentController;
 |
 */
 
-Route::get('/test', [PageController::class, 'test']);
+Route::get('/testpdf', [PageController::class, 'testPdf']);
+
 
 /* =================== FRONT ROUTES ====================== */
 
