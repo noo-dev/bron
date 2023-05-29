@@ -116,9 +116,10 @@
             <!-- Table Header -->
             <thead>
                 <tr>
-                    <th>Başlanýan wagty</th>
-                    <th>Tamamlanýan wagty</th>
+                    <th style="width: 20%">Başlanýan wagty</th>
+                    <th style="width: 20%">Gutarýan wagty</th>
                     <th>Otag görnüşi</th>
+                    <th>Otag nomeri</th>
                     <th>Uly adam</th>
                     <th>Çagalar</th>
                 </tr>
@@ -129,19 +130,13 @@
             <tbody>
 
                 <tr>
-                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $booking->checkin_date)->format('j F Y') }}</td>
-                    <td>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $booking->checkout_date)->format('j F Y') }}</td>
-                    <td>Lýuks</td>
-                    <td>2</td>
-                    <td>-</td>
+                    <td style="width: 20%">{{ \Carbon\Carbon::createFromFormat('Y-m-d', $booking->checkin_date)->translatedFormat('j F Y') }}</td>
+                    <td style="width: 20%">{{ \Carbon\Carbon::createFromFormat('Y-m-d', $booking->checkout_date)->translatedFormat('j F Y') }}</td>
+                    <td>{{ $booking->room->roomtype->title }}</td>
+                    <td>{{ $booking->room->title }}</td>
+                    <td>{{ $booking->total_adults }}</td>
+                    <td>{{ $booking->total_children ?? '-' }}</td>
                 </tr><!-- Table Row -->
-
-                {{-- <tr class="even">
-                    <td>Take the dog for a walk</td>
-                    <td>100%</td>
-                    <td>Yes</td>
-                </tr><!-- Darker Table Row --> --}}
-
 
             </tbody>
             <!-- Table Body -->
@@ -199,15 +194,15 @@
 
                 <tr>
                     <td>Gün sany</td>
-                    <td>6</td>
+                    <td>{{ $dayAndPrice['days'] }}</td>
                 </tr><!-- Table Row -->
                 <tr>
                     <td>Otagyň bir günki bahasy</td>
-                    <td>200 manat</td>
+                    <td>{{ $room_price }}</td>
                 </tr><!-- Table Row -->
                 <tr style="font-weight: bold">
                     <td>JEMI TÖLEG</td>
-                    <td>1200</td>
+                    <td>{{ $dayAndPrice['total_payment'] }}</td>
                 </tr><!-- Table Row -->
 
 

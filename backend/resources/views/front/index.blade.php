@@ -66,18 +66,20 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="select-option">
-                                <label for="available-rooms">Elýeterli otaglar:</label>
-                                <select id="available-rooms" name="room_id">
-                                </select>
-                                <p class="room-price-p" style="display: none">Price: <span class="show-room-price"></span></p>
+                            <button class="check-btn" type="button">Barla</button>
+                            <div id="available-rooms-group" style="visibility: hidden">
+                                <div class="select-option">
+                                    <label for="available-rooms">Elýeterli otaglar:</label>
+                                    <select id="available-rooms" name="room_id">
+                                    </select>
+                                    <p class="room-price-p" style="display: none">Bahasy: <span class="show-room-price"> manat</span></p>
+                                </div>
+                                <button type="submit">Bronla</button>
                             </div>
                             <input type="hidden" name="user_id" value="{{ session('user') ? session('user')['id'] : '' }}">
                             <input type="hidden" name="room_price" id="room_price" value="">
                             <input type="hidden" name="ref" value="front">
                             <div class="d-flex">
-                                <button class="check-btn" type="button">Barla</button>
-                                <button type="submit">Bronla</button>
                             </div>
                         </form>
                     </div>
@@ -117,6 +119,7 @@
                     availableRooms.html('<option>Ýüklenýär<option>');
                 },
                 success: function(res) {
+                    $('#available-rooms-group').css('visibility', 'visible');
                     availableRooms.empty();
                     console.log(res)
                     var str = '<option data-display="Otag saýlaň">Otaglar</option>';

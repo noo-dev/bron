@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\RoomType;
 use App\Models\Booking;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Http;
 
 class PageController extends Controller
@@ -46,7 +47,9 @@ class PageController extends Controller
     }
 
     public function dashboard() {
-        return view('front.dashboard');
+        $user = Customer::find(session('user')->id);
+        $bookings = $user->bookings;
+        return view('front.dashboard', compact('user'));
     }
 
     public function testPdf() {

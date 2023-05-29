@@ -10,6 +10,16 @@ use PDF;
 
 class BookingController extends Controller
 {
+    public function getDayAndPrice($checkin_date, $checkout_date, $room_price)
+    {
+        $checkin_date_tmstmp = strtotime($checkin_date);
+        $checkout_date_tmstmp = strtotime($checkout_date);
+        $difference = $checkout_date_tmstmp - $checkin_date_tmstmp;
+        $days = abs($difference/(60*60)/24) + 1;
+        $total_payment = $days * ($room_price);
+        return ['days' => $days, 'total_payment' => $total_payment];
+    }
+
     public function index()
     {
         $bookings = Booking::all();
@@ -35,6 +45,8 @@ class BookingController extends Controller
 
         $checkin_date_tmstmp = strtotime($request->checkin_date);
         $checkout_date_tmstmp = strtotime($request->checkout_date);
+        $checkin_date = date('Y-m-d', $checkin_date_tmstmp);;
+        $checkout_date = date('Y-m-d', $checkout_date_tmstmp);
         $difference = $checkout_date_tmstmp - $checkin_date_tmstmp;
         $days = abs($difference/(60*60)/24) + 1;
         $room_price = $request->room_price;
@@ -57,7 +69,7 @@ class BookingController extends Controller
                     'quantity' => 1,
                 ]],
                 'mode' => 'payment',
-                'success_url' => "http://localhost:8000/booking/success?session_id={CHECKOUT_SESSION_ID}&uid={$request->user_id}&rid={$request->room_id}&cid={$request->checkin_date}&cod={$request->checkout_date}&ta={$request->total_adults}&tc={$request->total_children}",
+                'success_url' => "http://localhost:8000/booking/success?session_id={CHECKOUT_SESSION_ID}&uid={$request->user_id}&rid={$request->room_id}&cid={$checkin_date}&cod={$checkout_date}&ta={$request->total_adults}&tc={$request->total_children}",
                 'cancel_url' => 'http://localhost:8000/booking/fail'
             ]);
             // dd($session);        
@@ -67,8 +79,8 @@ class BookingController extends Controller
             $booking = new Booking;
             $booking->user_id = $request->user_id;
             $booking->room_id = $request->room_id;
-            $booking->checkin_date = date('Y-m-d', $checkin_date_tmstmp);
-            $booking->checkout_date = date('Y-m-d', $checkout_date_tmstmp);
+            $booking->checkin_date = $checkin_date;
+            $booking->checkout_date = $checkout_date;
             $booking->total_adults = $request->total_adults;
             $booking->total_children = $request->total_children;
             $booking->save();
@@ -136,8 +148,10 @@ class BookingController extends Controller
     }
 
     public function getTicket(Request $request, $id) {
-        $booking = Booking::find($id);
-        $pdf = PDF::loadView('ticket', compact('booking'));
+        $booking = Booking::with('room', 'customer')->find($id);
+        $room_price = $booking->room->roomtype->price;
+        $dayAndPrice = $this->getDayAndPrice($booking->checkin_date, $booking->checkout_date, $room_price);
+        $pdf = PDF::loadView('ticket', compact('booking', 'dayAndPrice', 'room_price'));
         return $pdf->download(date('Ymd.') . '.pdf');
     }
 

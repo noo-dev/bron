@@ -7,10 +7,7 @@
                 <div class="card border border-success">
                     <div class="card-body">
                         <div class="card-text text-success text-center">Töleg üstünlikli amala aşyryldy</div>
-                        <form action="{{ route('download.ticket', ['id' => $booking->id]) }}" method="get">
-                            @csrf
-                            <button class="btn btn-success">Biledi ýüklemek</button>
-                        </form>
+                            <a href="{{ route('download.ticket', ['id' => $booking->id]) }}" class="btn btn-success">Biledi ýüklemek</a>
                     </div>
                 </div>
             </div>

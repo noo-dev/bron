@@ -6,7 +6,7 @@
             <form action="">
                 <div class="form-group">
                     <label for="date">Senesi: </label>
-                    <input type="date" name="date" id="date" class="form-control">
+                    <input type="date" name="date" id="date" value="{{ $_GET['date']  }}" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-success">Barla</button>
 

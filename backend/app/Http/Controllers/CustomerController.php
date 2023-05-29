@@ -63,6 +63,7 @@ class CustomerController extends Controller
         $c->save();
 
         if ($request->ref === 'front') {
+            session(['customerLogin' => true, 'user' => $c]);
             return redirect()->route('homePage')->with('success', 'Siz üstünlikli registrasiýa bolduňyz');
         }
 
@@ -161,7 +162,7 @@ class CustomerController extends Controller
                 ['password', '=', $password]
             ])->first();
             session(['customerLogin' => true, 'user' => $customer]);
-            return redirect()->route('homePage');
+            return redirect()->route('front.dashboard');
         }
         return redirect()->back()->with('error', 'Nädogry email ýa-da parol!');
     }

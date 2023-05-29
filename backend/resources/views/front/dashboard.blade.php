@@ -1,10 +1,9 @@
 @extends('front.layout')
 
-@php $user = session('user') @endphp
 
 @section('content')
     <div class="container my-5">
-        <h2 class="display-4">{{ session('user')->full_name }}</h2>
+        <h2 class="display-4">{{ $user->full_name }}</h2>
         <div class="card mt-3">
             <div class="card-header">
                 <h3 class="">Bronlar</h3>
@@ -12,6 +11,7 @@
             <div class="card-body">
                 @if ($user->bookings->count() > 0)
                     <div class="list-group">
+                        @php dump($user) @endphp
                         @foreach ($user->bookings as $booking)
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <p><strong>Senesi: </strong>{{ $booking->checkin_date }} - {{ $booking->checkout_date }}</p>

@@ -140,7 +140,7 @@
                         <div class="nav-menu">
                             <nav class="mainmenu">
                                 <ul>
-                                    <li class="active"><a href="./index.html">Baş sahypa</a></li>
+                                    <li class="active"><a href="/">Baş sahypa</a></li>
                                     <li><a href="./rooms.html">Otaglar</a></li>
                                     <li><a href="./about-us.html">Biz hakynda</a></li>
                                     {{-- <li><a href="./pages.html">Pages</a>
