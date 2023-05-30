@@ -78,7 +78,7 @@
                             </div>
                             <input type="hidden" name="user_id" value="{{ session('user') ? session('user')['id'] : '' }}">
                             <input type="hidden" name="room_price" id="room_price" value="">
-                            <input type="hidden" name="ref" value="front">
+                            <input type="hidden" name="ref" value="admin">
                             <div class="d-flex">
                             </div>
                         </form>
@@ -87,9 +87,9 @@
             </div>
         </div>
         <div class="hero-slider owl-carousel">
-            <div class="hs-item set-bg" data-setbg="{{ asset("/front/img/hero/hero-1.jpg") }}"></div>
-            <div class="hs-item set-bg" data-setbg="{{ asset("/front/img/hero/hero-2.jpg") }}"></div>
-            <div class="hs-item set-bg" data-setbg="{{ asset("/front/img/hero/hero-3.jpg") }}"></div>
+            <div class="hs-item set-bg" data-setbg="{{ asset("/front/img/hero/hotel1.jpg") }}"></div>
+            <div class="hs-item set-bg" data-setbg="{{ asset("/front/img/hero/hotel2.jpg") }}"></div>
+            <div class="hs-item set-bg" data-setbg="{{ asset("/front/img/hero/hotel3.jpg") }}"></div>
         </div>
     </section>
     <!-- Hero Section End -->

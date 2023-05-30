@@ -11,10 +11,9 @@
             <div class="card-body">
                 @if ($user->bookings->count() > 0)
                     <div class="list-group">
-                        @php dump($user) @endphp
                         @foreach ($user->bookings as $booking)
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <p><strong>Senesi: </strong>{{ $booking->checkin_date }} - {{ $booking->checkout_date }}</p>
+                                <p><strong>Senesi: </strong>{{ \Carbon\Carbon::createFromFormat('Y-m-d', $booking->checkin_date)->translatedFormat('j F, Y') }} - {{ \Carbon\Carbon::createFromFormat('Y-m-d', $booking->checkout_date)->translatedFormat('j F, Y') }}</p>
                                 <a href="{{ route('download.ticket', ['id' => $booking->id]) }}" target="_blank" class="btn btn-info">Ýükle <i class="fa fa-download"></i></a>
                             </li>
                         @endforeach

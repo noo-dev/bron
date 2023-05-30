@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Booking;
 use App\Models\Customer;
 use PDF;
+use Illuminate\Support\Facades\Http;
 
 class BookingController extends Controller
 {
@@ -85,7 +86,16 @@ class BookingController extends Controller
             $booking->total_children = $request->total_children;
             $booking->save();
         }
-        return redirect()->route('bookings.create')->withSuccess('Bron üstünlikli goşuldy');
+        // return redirect()->route('bookings.create')->withSuccess('Bron üstünlikli goşuldy');
+        
+        /* code below is for stripe success method */
+        Http::post('http://localhost:8080/send', [
+            'customer' => $booking->customer->full_name,
+            'checkin_date' => $booking->checkin_date,
+            'checkout_date' => $booking->checkout_date,
+            'id' => $booking->id
+        ]);
+        return view('front.booking-success', compact('booking'));
     }
     
 
@@ -108,14 +118,14 @@ class BookingController extends Controller
         $date = date('Y-m-d', strtotime($request->date));
         // dd($date);
         $bookedRooms = DB::SELECT("SELECT room_id FROM bookings WHERE '$date' BETWEEN checkin_date AND checkout_date");
-        $adatyRooms = DB::SELECT("SELECT id, title from ROOMS WHERE room_type_id = 7");
+        $ordinaryRooms = DB::SELECT("SELECT id, title from ROOMS WHERE room_type_id = 7");
         $premiumRooms = DB::SELECT("SELECT id, title from ROOMS WHERE room_type_id = 8");
         $luxRooms = DB::SELECT("SELECT id, title from ROOMS WHERE room_type_id = 9");
         $arr = [];
         foreach($bookedRooms as $br) {
             $arr[] = $br->room_id;
         }
-        return view('admin.bookings.visual-result', compact('arr', 'adatyRooms'));
+        return view('admin.bookings.visual-result', compact('arr', 'ordinaryRooms', 'premiumRooms', 'luxRooms'));
     }
 
     public function bookingPaymentSuccess(Request $request)
@@ -152,7 +162,7 @@ class BookingController extends Controller
         $room_price = $booking->room->roomtype->price;
         $dayAndPrice = $this->getDayAndPrice($booking->checkin_date, $booking->checkout_date, $room_price);
         $pdf = PDF::loadView('ticket', compact('booking', 'dayAndPrice', 'room_price'));
-        return $pdf->download(date('Ymd.') . '.pdf');
+        return $pdf->download(date('Ymd') . '.pdf');
     }
 
     public function getVisual()
