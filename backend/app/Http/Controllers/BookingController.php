@@ -8,6 +8,7 @@ use App\Models\Booking;
 use App\Models\Customer;
 use PDF;
 use Illuminate\Support\Facades\Http;
+use \Carbon\Carbon;
 
 class BookingController extends Controller
 {
@@ -86,16 +87,8 @@ class BookingController extends Controller
             $booking->total_children = $request->total_children;
             $booking->save();
         }
-        // return redirect()->route('bookings.create')->withSuccess('Bron üstünlikli goşuldy');
+        return redirect()->route('bookings.create')->withSuccess('Bron üstünlikli goşuldy');
         
-        /* code below is for stripe success method */
-        Http::post('http://localhost:8080/send', [
-            'customer' => $booking->customer->full_name,
-            'checkin_date' => $booking->checkin_date,
-            'checkout_date' => $booking->checkout_date,
-            'id' => $booking->id
-        ]);
-        return view('front.booking-success', compact('booking'));
     }
     
 
@@ -141,6 +134,12 @@ class BookingController extends Controller
                 'total_adults' => $request->query('ta'),
                 'total_children' => $request->query('tc'),
                 'ref' => 'front'
+            ]);
+            Http::post('http://localhost:8080/send', [
+                'customer' => $booking->customer->full_name,
+                'checkin_date' => Carbon::createFromFormat('Y-m-d', $booking->checkin_date)->translatedFormat('j F'),
+                'checkout_date' => Carbon::createFromFormat('Y-m-d', $booking->checkout_date)->translatedFormat('j F'),
+                'id' => $booking->id
             ]);
             return view('front.booking-success', compact('booking'));
         }

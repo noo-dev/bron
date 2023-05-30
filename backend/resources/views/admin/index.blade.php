@@ -1,16 +1,11 @@
 @extends('admin.layout')
 
-@section('styles')
-    <link rel="stylesheet" href="{{ asset('/admin/plugins/chart.js/Chart.min.css') }}">
-@endsection
 
 @section('content')
 
     <div class="row">
         <div class="col-md-6">
-          <button type="button" class="btn btn-info toastsDefaultInfo">
-            Launch Success Toast
-          </button>
+          
         </div>
         <div class="col-md-6"></div>
     </div>
@@ -28,7 +23,7 @@
           console.log(data)
           $(document).Toasts('create', {
             class: 'bg-info',
-            title: `${data.checkin_date}   ${data.checkout_date}`,
+            title: `${data.checkin_date} - ${data.checkout_date}`,
             subtitle: '',
             body: `${data.customer}`
           })

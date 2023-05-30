@@ -1,7 +1,7 @@
 @extends('front.layout')
 
 @section('content')
-    <div class="container my-5">
+    <div class="container my-5" style="min-height: 400px">
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <div class="card border border-success">
